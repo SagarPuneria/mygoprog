@@ -19,6 +19,8 @@ func main() {
 			done <- true
 		}(v)
 	}
+	//In this example, the value of v is passed as an argument to the anonymous function.
+	// That value is then accessible inside the function as the variable u.
 
 	// wait for all goroutines to complete before exiting
 	for _ = range values {

@@ -9,7 +9,6 @@ type A struct {
 }
 
 //https://golang.org/doc/faq#different_method_sets
-
 func (d *A) object() { // Correct way
 	//func (d A) object() { // Wrong way
 	fmt.Println("(d A) GobEncode...")

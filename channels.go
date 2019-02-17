@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func sum(s []int, c chan int) {
 	sum := 0
@@ -15,6 +18,7 @@ func main() {
 
 	c := make(chan int)
 	go sum(s[:len(s)/2], c)
+	time.Sleep(time.Second)
 	go sum(s[len(s)/2:], c)
 	x, y := <-c, <-c // receive from c
 
