@@ -38,6 +38,8 @@ func main() {
 	fmt.Println("After fun1, sl:", sl)
 
 	fmt.Println("=========")
+	var arr []int
+	fmt.Println(arr, arr == nil) 	 // [] true
 	arr1 := new([]int)               // new imbuilt function allocates nil slice to *arr1
 	fmt.Println(*arr1, *arr1 == nil) // [] true
 	fmt.Println(arr1, arr1 == nil)   // &[] false

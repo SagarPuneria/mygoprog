@@ -11,14 +11,23 @@ func main() {
 	a[0] = 10
 	fmt.Println(a, b)
 	fmt.Println("===============")
-	//var x = [3]string{"a", "b", "c"} // Any Array Type is value type
-	var x = []string{"a", "b", "c"} // Any Slice Type is reference type
+	var x = [3]string{"a", "b", "c"} // Any Array Type is value type
+	//var x = []string{"a", "b", "c"} // Any Slice Type is reference type
 	fmt.Println("Before fun:", x)
 	fun(x)
 	fmt.Println("Afore fun:", x)
 }
 
-//func fun(b [3]string) { // Any Array Type is value type
-func fun(b []string) { // Any Slice Type is reference type
+func fun(b [3]string) { // Any Array Type is value type
+	//func fun(b []string) { // Any Slice Type is reference type
 	b[0] = "z"
+	fmt.Println("Inside fun, b:", b)
 }
+/*
+[1 2 3] [1 2 3]
+[10 2 3] [1 2 3]
+===============
+Before fun: [a b c]
+Inside fun, b: [z b c]
+Afore fun: [a b c]
+*/
