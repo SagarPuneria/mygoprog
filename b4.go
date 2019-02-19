@@ -40,10 +40,12 @@ func main() {
 	http.ListenAndServe(":8080", personOne)*/
 
 	/*http.Handle("/", &person{fName: "Jim"})
+	http.Handle("/first", &person{fName: "first"})
 	http.ListenAndServe(":8080", nil)*/
 
 	/*mux := http.NewServeMux()
 	mux.Handle("/", &person{fName: "Jim"})
+	mux.Handle("/first", &person{fName: "first"})
 	http.ListenAndServe(":8080", mux)*/
 
 	//-------------------------------------
@@ -52,9 +54,9 @@ func main() {
 		w.Write([]byte("Hello universe 2"))
 		//req.Body.Close() // NOT NEEDED
 		//req.Close = true // NOT NEEDED FOR SERVER SIDE
-	})*/
-	http.HandleFunc("/", someFunc)
-	http.ListenAndServe("127.0.0.1:8080", nil)
+	})
+	http.HandleFunc("/all", someFunc)
+	http.ListenAndServe("127.0.0.1:8080", nil)*/
 }
 
 func someFunc(w http.ResponseWriter, req *http.Request) {
