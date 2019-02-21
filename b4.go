@@ -54,12 +54,35 @@ func main() {
 		w.Write([]byte("Hello universe 2"))
 		//req.Body.Close() // NOT NEEDED
 		//req.Close = true // NOT NEEDED FOR SERVER SIDE
-	})
+	})*/
 	http.HandleFunc("/all", someFunc)
-	http.ListenAndServe("127.0.0.1:8080", nil)*/
+	http.ListenAndServe("127.0.0.1:8080", nil)
 }
 
 func someFunc(w http.ResponseWriter, req *http.Request) {
+	fmt.Printf("%+v\n", req)
+	fmt.Println("==============================================================================")
+	fmt.Println("req:", req) // OR fmt.Printf("%v\n", req)
+	fmt.Println("==============================================================================")
+	fmt.Println("req.Method:", req.Method)
+	fmt.Println("req.URL:", req.URL)
+	fmt.Println("req.Proto:", req.Proto, ",req.ProtoProtoMajor:", req.ProtoMajor, ",req.ProtoMinor:", req.ProtoMinor)
+	fmt.Println("req.Header:", req.Header)
+	fmt.Println("req.Body:", req.Body)
+	fmt.Println("req.GetBody:", req.GetBody)
+	fmt.Println("req.ContentLength:", req.ContentLength)
+	fmt.Println("req.TransferEncoding:", req.TransferEncoding)
+	fmt.Println("req.Host:", req.Host)
+	fmt.Println("req.Form:", req.Form)
+	fmt.Println("req.PostForm:", req.PostForm)
+	fmt.Println("req.MultipartForm:", req.MultipartForm)
+	fmt.Println("req.Trailer:", req.Trailer)
+	fmt.Println("req.RemoteAddr:", req.RemoteAddr)
+	fmt.Println("req.RequestURI:", req.RequestURI)
+	fmt.Println("req.TLS:", req.TLS)
+	fmt.Println("req.Cancel:", req.Cancel)
+	fmt.Println("req.Response:", req.Response)
+
 	fmt.Println("Hello universe")
 	w.Write([]byte("Hello universe"))
 }
