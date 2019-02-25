@@ -40,12 +40,14 @@ func main() {
 	http.ListenAndServe(":8080", personOne)*/
 
 	/*http.Handle("/", &person{fName: "Jim"})
-	http.Handle("/first", &person{fName: "first"})
+	//http.Handle("/first", &person{fName: "first"})
+	http.Handle("/first", http.RedirectHandler("https://www.gorillatoolkit.org/pkg/mux", 307))
 	http.ListenAndServe(":8080", nil)*/
 
 	/*mux := http.NewServeMux()
 	mux.Handle("/", &person{fName: "Jim"})
-	mux.Handle("/first", &person{fName: "first"})
+	//mux.Handle("/first", &person{fName: "first"})
+	mux.Handle("/first", http.RedirectHandler("https://www.gorillatoolkit.org/pkg/mux", 307))
 	mux.HandleFunc("/all", someFunc)
 	http.ListenAndServe(":8080", mux)*/
 
