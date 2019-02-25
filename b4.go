@@ -46,6 +46,7 @@ func main() {
 	/*mux := http.NewServeMux()
 	mux.Handle("/", &person{fName: "Jim"})
 	mux.Handle("/first", &person{fName: "first"})
+	mux.HandleFunc("/all", someFunc)
 	http.ListenAndServe(":8080", mux)*/
 
 	//-------------------------------------
