@@ -35,7 +35,7 @@ func main() {
 	s := r.PathPrefix("/products").Subrouter()
 	// "/products/"
 	s.HandleFunc("/", ProductsHandler)
-	// "/products/{key}/"
+	// "/products/{key}"
 	s.HandleFunc("/{key}", ProductHandler)
 	// "/products/{key}/details"
 	s.HandleFunc("/{key}/details", ProductDetailsHandler)
