@@ -24,16 +24,16 @@ type post struct {
 
 //Note: One of the field author is anonymous(i.e.Field with NO variable name) structure.
 func (p *post) details() {
-	fmt.Println("Title: ", p.title)                       // Title:  Inheritance in Go
-	fmt.Println("Content: ", p.content)                   // Content:  Go supports composition instead of inheritance
-	fmt.Println("post fullName: ", p.fullName())          // post fullName:  Inheritance in Go, Go supports composition instead of inheritance
+	fmt.Println("Title: ", p.title)                       // Title: Go doesn’t support Inheritance
+	fmt.Println("Content: ", p.content)                   // Content: Go supports composition instead of inheritance
+	fmt.Println("post fullName: ", p.fullName())          // post fullName:  Go doesn’t support Inheritance, Go supports composition instead of inheritance
 	fmt.Println("Author fullName: ", p.author.fullName()) // Author fullName:  Naveen, Ramanathan
 	fmt.Println("Bio: ", p.author.bio)                    // Bio:  Golang Enthusiast
 }
 func main() {
 	author1 := &author{"Naveen", "Ramanathan", "Golang Enthusiast"}
 	post1 := &post{
-		"Inheritance in Go",
+		"Go doesn’t support Inheritance",
 		"Go supports composition instead of inheritance",
 		author1,
 	}
@@ -41,9 +41,9 @@ func main() {
 }
 
 /*
-Title:  Inheritance in Go
+Title:  Go doesn’t support Inheritance
 Content:  Go supports composition instead of inheritance
-Author:  Inheritance in Go Go supports composition instead of inheritance
-Author:  Naveen Ramanathan
+post fullName:  Go doesn’t support Inheritance, Go supports composition instead of inheritance
+Author fullName:  Naveen, Ramanathan
 Bio:  Golang Enthusiast
 */
