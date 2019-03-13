@@ -8,8 +8,8 @@ import (
 func main() {
 	message := make(chan string)
 	go func() {
-		message <- "ping"                          // Here control holds execution until variable message send any string. If won't send any string it will be deadlock.
-		fmt.Println("len(message):", len(message)) // len(message): 0
+		message <- "ping"                                                          // Here control holds execution until variable message send any string. If won't send any string it will be deadlock.
+		fmt.Println("len(message):", len(message), ",cap(message):", cap(message)) // len(message): 0 ,cap(message):0
 	}()
 	time.Sleep(2 * time.Second)
 	msg := <-message // Here control holds execution until variable message received any string. If won't received any string it will be deadlock.
