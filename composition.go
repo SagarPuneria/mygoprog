@@ -6,6 +6,7 @@ type author struct {
 	firstName string
 	lastName  string
 	bio       string
+	// *post // Circular embedding of structs are allowed. It will not throw any compilation error.
 }
 
 func (a *author) fullName() string {
