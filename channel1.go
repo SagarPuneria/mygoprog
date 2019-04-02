@@ -7,10 +7,11 @@ import (
 func main() {
 	message := make(chan string) // Sending or Receiving any msg on nil channel will be > fatal error: all goroutines are asleep - deadlock! To avoid fatal error we use make function.
 	go func() {
-		fmt.Println("Inside go func(), message received:", <-message)
+		fmt.Println("Inside go func(), message received:", <-message) // Here control holds execution until variable message received any string. If unable receive any string it will NOT be deadlock in GO routine function.
+
 		fmt.Println("Inside go func(), len(message):", len(message), ",cap(message):", cap(message)) // len(message): 0 ,cap(message):0
 
-		message <- "ping" // Here control holds execution until variable message send any string. If unable send any string it will NOT be deadlock only in GO routine function.
+		message <- "ping" // Here control holds execution until variable message send any string. If unable send any string it will NOT be deadlock in GO routine function.
 	}()
 	message <- "ping" // Here control holds execution until variable message send any string. If won't send any string then it will be deadlock.
 
