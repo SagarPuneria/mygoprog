@@ -1,0 +1,11 @@
+https://github.com/golang/go/issues/19959
+
+https://gist.github.com/elithrar/5aef354a54ba71a32e23
+
+https://github.com/golang/go/issues/18190
+
+https://blog.questionable.services/article/http-handler-error-handling-revisited/
+
+https://blog.questionable.services/article/custom-handlers-avoiding-globals/
+
+https://justinas.org/writing-http-middleware-in-go
