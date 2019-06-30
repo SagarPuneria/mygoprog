@@ -1,0 +1,3746 @@
+Online Test:
+INSERT INTO transfers(name, money) VALUES("sagar", 2);
+
+SELECT SUM(money) FROM transfers WHERE  money > 0;
+
+SELECT * FROM transfers;
+
+SELECT name, SUM(money) as sum_of_deposits FROM transfers WHERE  money > 0;
+
+SELECT name, SUM(money) as sum_of_deposits FROM transfers WHERE money > 0
+UNION ALL 
+SELECT name, SUM(money) as sum_of_withdrawals FROM transfers WHERE money < 0;
+
+
+select name, SUM (case when money >= 0 then money else 0 end) as sum_of_deposits, SUM (case when money < 0 then  money else 0 end) as sum_of_withdrawals from transfers;
+
+label1
+
+select name, SUM (case when money >= 0 then money else 0 end) as sum_of_deposits, SUM (case when money < 0 then  money else 0 end) as sum_of_withdrawals from transfers ORDER BY name ASC;
+
+
+
+=======================================================================================================
+Win:
+e:\workspace\TDD\gorilla_mux\src\GCP>m1.exe "root" "rythmos19" "127.0.0.1" "3306"
+DNS: root:rythmos19@tcp(127.0.0.1:3306)/
+Connection Established
+
+root@sagar-VirtualBox:~/workspace/src/dataBase# ./m1 "root" "sagar" "127.0.0.1" "3306"
+DNS: root:sagar@tcp(127.0.0.1:3306)/
+Connection Established
+
+
+==>Keep in Mind That...
+|->SQL keywords are NOT case sensitive: select is the same as SELECT
+|->In this tutorial we will write all SQL keywords in upper-case.
+
+
+To install mysql server:
+# apt-get update
+# apt-get install mysql-server
+
+To make a connection to your MySQL server:
+$ mysqldump -u [uname] -p[pass]
+# mysql -u root -psagar
+[OR]
+# mysql -u root -p
+Enter password:*******[sagar]
+
+To change password of MySQL server:
+# mysqladmin -u root -p password
+Enter password: ******
+New password: ******
+Confirm new password: ******
+
+# ps -ef | grep mysql
+mysql     7167     1  0 14:10 ?        00:00:03 /usr/sbin/mysqld
+
+To shut down an already running MySQL server, then you can do it by using the following command:
+root@host# /usr/bin/mysqladmin -u root -p shutdown
+Enter password: ******
+
+mysql> SELECT host, user, password FROM user WHERE user = 'guest';
+ERROR 1046 (3D000): No database selected
+
+mysql> STATUS;
+--------------
+mysql  Ver 14.14 Distrib 5.5.62, for debian-linux-gnu (x86_64) using readline 6.3
+
+Connection id:          36
+Current database:
+Current user:           root@localhost
+SSL:                    Not in use
+Current pager:          stdout
+Using outfile:          ''
+Using delimiter:        ;
+Server version:         5.5.62-0ubuntu0.14.04.1 (Ubuntu)
+Protocol version:       10
+Connection:             Localhost via UNIX socket
+Server characterset:    latin1
+Db     characterset:    latin1
+Client characterset:    utf8
+Conn.  characterset:    utf8
+UNIX socket:            /var/run/mysqld/mysqld.sock
+Uptime:                 19 min 38 sec
+
+Threads: 1  Questions: 117  Slow queries: 0  Opens: 48  Flush tables: 1  Open tables: 41  Queries per second avg: 0.099
+--------------
+
+mysql> SELECT DATABASE(); [OR] SELECT DATABASE() FROM DUAL;
++------------+
+| DATABASE() |
++------------+
+| NULL       |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> USE mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+Database changed
+
+mysql> SELECT DATABASE(); [OR] SELECT DATABASE() FROM DUAL;
++------------+
+| DATABASE() |
++------------+
+| mysql      |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT host, user, password FROM user WHERE user = 'guest';
+Empty set (0.07 sec)
+
+mysql> INSERT INTO user (host, user, password, select_priv, insert_priv, update_priv) VALUES ('sagar-VirtualBox', 'guest', PASSWORD('guest123'), 'Y', 'Y', 'Y');
+Query OK, 1 row affected, 3 warnings (0.08 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT host, user, password FROM user WHERE user = 'guest';
++------------------+-------+-------------------------------------------+
+| host             | user  | password                                  |
++------------------+-------+-------------------------------------------+
+| sagar-VirtualBox | guest | *F1573429579994EEA4459170FDAC55DF96C4BBE6 |
++------------------+-------+-------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT host, user, password FROM user WHERE user = 'zara';
+Empty set (0.00 sec)
+
+mysql> SHOW DATABASES; [or] show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP ON TUTORIALS.* TO 'zara'@'sagar-VirtualBox' IDENTIFIED BY 'zara123';
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT host, user, password FROM user WHERE user = 'zara';
++------------------+------+-------------------------------------------+
+| host             | user | password                                  |
++------------------+------+-------------------------------------------+
+| sagar-virtualbox | zara | *08F7D6C84224646B57BDF66A6480F337F403F10C |
++------------------+------+-------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++---------------------------+
+| Tables_in_mysql           |
++---------------------------+
+| columns_priv              |
+| db                        |
+| help_category             |
+:							:
+:							:
+:							:
+| user                      |
++---------------------------+
+24 rows in set (0.00 sec)
+
+SELECT syntax:
+SELECT column1, column2, ... FROM table_name; [column1, column2, ... are the field names of the table you want to select data from]
+SELECT * FROM table_name;
+mysql> SELECT * FROM db \G  [OR] SELECT * FROM db; [Here output is different]
+*************************** 1. row ***************************
+                 Host: sagar-virtualbox
+                   Db: TUTORIALS
+                 User: zara
+          Select_priv: Y
+          Insert_priv: Y
+          Update_priv: Y
+				:
+				:
+*************************** 2. row ***************************
+                 Host: sagar-virtualbox
+                   Db: mysql
+                 User: zara
+          Select_priv: Y
+          Insert_priv: Y
+				:
+				:
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM help_category;
++------------------+-----------------------------------------------+--------------------+-----+
+| help_category_id | name                                          | parent_category_id | url |
++------------------+-----------------------------------------------+--------------------+-----+
+|                1 | Geographic                                    |                  0 |     |
+|                2 | Polygon properties                            |                 35 |     |
+:
+:
+|               39 | Functions                                     |                 36 |     |
+|               40 | Data Definition                               |                 36 |     |
++------------------+-----------------------------------------------+--------------------+-----+
+40 rows in set (0.05 sec)
+
+mysql> SELECT parent_category_id FROM help_category;
++--------------------+
+| parent_category_id |
++--------------------+
+|                  0 |
+|                 35 |
+|                 39 |
+:
+:
+|                 36 |
+|                 36 |
++--------------------+
+40 rows in set (0.00 sec)
+
+SELECT DISTINCT Syntax:
+SELECT DISTINCT column1, column2, ... FROM table_name;
+mysql> SELECT DISTINCT parent_category_id FROM help_category;
++--------------------+
+| parent_category_id |
++--------------------+
+|                  0 |
+|                 35 |
+|                 39 |
+|                 36 |
+|                  1 |
++--------------------+
+5 rows in set (0.05 sec)
+
+mysql> SELECT COUNT(DISTINCT parent_category_id) FROM help_category;
++------------------------------------+
+| COUNT(DISTINCT parent_category_id) |
++------------------------------------+
+|                                  5 |
++------------------------------------+
+1 row in set (0.01 sec)
+
+WHERE Syntax:
+SELECT column1, column2, ... FROM table_name WHERE condition;
+Note: The WHERE clause is not only used in SELECT statement, it is also used in UPDATE, DELETE statement, etc.!
+mysql> SELECT * FROM help_category WHERE name='Geographic';
++------------------+------------+--------------------+-----+
+| help_category_id | name       | parent_category_id | url |
++------------------+------------+--------------------+-----+
+|                1 | Geographic |                  0 |     |
++------------------+------------+--------------------+-----+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM help_category WHERE parent_category_id=0;
++------------------+------------+--------------------+-----+
+| help_category_id | name       | parent_category_id | url |
++------------------+------------+--------------------+-----+
+|                1 | Geographic |                  0 |     |
+|               36 | Contents   |                  0 |     |
++------------------+------------+--------------------+-----+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM help_category WHERE help_category_id=1;
++------------------+------------+--------------------+-----+
+| help_category_id | name       | parent_category_id | url |
++------------------+------------+--------------------+-----+
+|                1 | Geographic |                  0 |     |
++------------------+------------+--------------------+-----+
+1 row in set (0.00 sec)
+
+mysql> SELECT rowid, name FROM help_category limit 10;[Need to investigate, rowid is by default supported only in sqllite]
+
+AND Syntax:
+SELECT column1, column2, ... FROM table_name WHERE condition1 AND condition2 AND condition3 ...;
+mysql> SELECT * FROM help_category WHERE parent_category_id=0 AND help_category_id=1;
++------------------+------------+--------------------+-----+
+| help_category_id | name       | parent_category_id | url |
++------------------+------------+--------------------+-----+
+|                1 | Geographic |                  0 |     |
++------------------+------------+--------------------+-----+
+1 row in set (0.00 sec)
+
+
+OR Syntax:
+SELECT column1, column2, ... FROM table_name WHERE condition1 OR condition2 OR condition3 ...;
+mysql> SELECT * FROM help_category WHERE parent_category_id=0 OR parent_category_id=1;
++------------------+-------------------------------+--------------------+-----+
+| help_category_id | name                          | parent_category_id | url |
++------------------+-------------------------------+--------------------+-----+
+|                1 | Geographic                    |                  0 |     |
+|               26 | GeometryCollection properties |                  1 |     |
+|               36 | Contents                      |                  0 |     |
++------------------+-------------------------------+--------------------+-----+
+3 rows in set (0.00 sec)
+
+NOT Syntax:
+SELECT column1, column2, ... FROM table_name WHERE NOT condition;
+mysql> SELECT * FROM help_category WHERE NOT parent_category_id=36;
++------------------+-------------------------------+--------------------+-----+
+| help_category_id | name                          | parent_category_id | url |
++------------------+-------------------------------+--------------------+-----+
+|                1 | Geographic                    |                  0 |     |
+|                2 | Polygon properties            |                 35 |     |
+|                3 | Numeric Functions             |                 39 |     |
+:
+:
+|               38 | String Functions              |                 39 |     |
++------------------+-------------------------------+--------------------+-----+
+22 rows in set (0.00 sec)
+
+mysql> SELECT * FROM help_category WHERE help_category_id=1 AND (parent_category_id=0 OR parent_category_id=1);
++------------------+------------+--------------------+-----+
+| help_category_id | name       | parent_category_id | url |
++------------------+------------+--------------------+-----+
+|                1 | Geographic |                  0 |     |
++------------------+------------+--------------------+-----+
+1 row in set (0.00 sec)
+
+ORDER BY Syntax:
+SELECT column1, column2, ... FROM table_name ORDER BY column1, column2, ... ASC|DESC;
+mysql> SELECT * FROM help_category ORDER BY name;
++------------------+-----------------------------------------------+--------------------+-----+
+| help_category_id | name                                          | parent_category_id | url |
++------------------+-----------------------------------------------+--------------------+-----+
+|               10 | Account Management                            |                 36 |     |
+|               27 | Administration                                |                 36 |     |
+|               19 | Bit Functions                                 |                 39 |     |
+:
+:
+|               33 | WKB                                           |                 35 |     |
+|                4 | WKT                                           |                 35 |     |
++------------------+-----------------------------------------------+--------------------+-----+
+40 rows in set (0.00 sec)
+
+mysql> SELECT * FROM help_category ORDER BY name DESC;
++------------------+-----------------------------------------------+--------------------+-----+
+| help_category_id | name                                          | parent_category_id | url |
++------------------+-----------------------------------------------+--------------------+-----+
+|                4 | WKT                                           |                 35 |     |
+|               33 | WKB                                           |                 35 |     |
+:
+:
+|               19 | Bit Functions                                 |                 39 |     |
+|               27 | Administration                                |                 36 |     |
+|               10 | Account Management                            |                 36 |     |
++------------------+-----------------------------------------------+--------------------+-----+
+40 rows in set (0.00 sec)
+
+mysql> SELECT * FROM help_category ORDER BY name, parent_category_id;
++------------------+-----------------------------------------------+--------------------+-----+
+| help_category_id | name                                          | parent_category_id | url |
++------------------+-----------------------------------------------+--------------------+-----+
+|               10 | Account Management                            |                 36 |     |
+:
+|               36 | Contents                                      |                  0 |     |
+|                6 | Control flow functions                        |                 39 |     |
+:
+|               23 | Data Types                                    |                 36 |     |
+|               32 | Date and Time Functions                       |                 39 |     |
+:
+|                4 | WKT                                           |                 35 |     |
++------------------+-----------------------------------------------+--------------------+-----+
+40 rows in set (0.00 sec)
+
+mysql> SELECT * FROM help_category ORDER BY name ASC, parent_category_id DESC;
++------------------+-----------------------------------------------+--------------------+-----+
+| help_category_id | name                                          | parent_category_id | url |
++------------------+-----------------------------------------------+--------------------+-----+
+|               10 | Account Management                            |                 36 |     |
+|               19 | Bit Functions                                 |                 39 |     |
+|               20 | Comparison operators                          |                 39 |     |
+|               24 | Compound Statements                           |                 36 |     |
+|               36 | Contents                                      |                  0 |     |
+:
+:
+|                4 | WKT                                           |                 35 |     |
++------------------+-----------------------------------------------+--------------------+-----+
+40 rows in set (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+CREATE DATABASE syntax:
+CREATE DATABASE databasename;
+mysql> CREATE DATABASE testDB;
+Query OK, 1 row affected (0.06 sec)
+OR
+mysql> CREATE DATABASE IF NOT EXISTS testDB;
+Query OK, 1 row affected, 1 warning (0.03 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| testDB             |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> DROP DATABASE testDB;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE testDB;
+mysql> USE testDB;
+Database changed
+
+mysql> STATUS;
+--------------
+mysql  Ver 14.14 Distrib 5.5.62, for debian-linux-gnu (x86_64) using readline 6.3
+
+Connection id:          36
+Current database:       testDB
+Current user:           root@localhost
+SSL:                    Not in use
+Current pager:          stdout
+Using outfile:          ''
+Using delimiter:        ;
+Server version:         5.5.62-0ubuntu0.14.04.1 (Ubuntu)
+Protocol version:       10
+Connection:             Localhost via UNIX socket
+Server characterset:    latin1
+Db     characterset:    latin1
+Client characterset:    utf8
+Conn.  characterset:    utf8
+UNIX socket:            /var/run/mysqld/mysqld.sock
+Uptime:                 2 hours 22 min 30 sec
+
+Threads: 1  Questions: 179  Slow queries: 0  Opens: 48  Flush tables: 1  Open tables: 41  Queries per second avg: 0.020
+--------------
+
+The SQL BACKUP DATABASE Statement:
+The BACKUP DATABASE statement is used in SQL Server to create a full back up of an existing SQL database.
+Syntax:
+BACKUP DATABASE databasename
+TO DISK = 'filepath';
+
+The SQL BACKUP WITH DIFFERENTIAL Statement:
+A differential back up only backs up the parts of the database that have changed since the last full database backup.
+Syntax:
+BACKUP DATABASE databasename
+TO DISK = 'filepath'
+WITH DIFFERENTIAL;
+
+CREATE TABLE Syntax:
+CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+   ....
+);
+
+mysql> SHOW TABLES;
+Empty set (0.00 sec)
+
+mysql> CREATE TABLE Persons (PersonID int, LastName varchar(255), FirstName varchar(255), Address varchar(255), City varchar(255));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Persons;
+Empty set (0.00 sec)
+
+mysql> DESCRIBE Persons;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| PersonID  | int(11)      | YES  |     | NULL    |       |
+| LastName  | varchar(255) | YES  |     | NULL    |       |
+| FirstName | varchar(255) | YES  |     | NULL    |       |
+| Address   | varchar(255) | YES  |     | NULL    |       |
+| City      | varchar(255) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons (PersonID, LastName, FirstName, Address, City) VALUES (32, 'Tom', 'Erichsen', 'Stavanger', 'Norway');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+-----------+--------+
+| PersonID | LastName | FirstName | Address   | City   |
++----------+----------+-----------+-----------+--------+
+|       32 | Tom      | Erichsen  | Stavanger | Norway |
++----------+----------+-----------+-----------+--------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Persons (PersonID, LastName, FirstName, Address, City) VALUES (33, 'Puneria', 'Sagar', '#16-1, kareemabad road', 'Warangal');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------------------+----------+
+| PersonID | LastName | FirstName | Address                | City     |
++----------+----------+-----------+------------------------+----------+
+|       32 | Tom      | Erichsen  | Stavanger              | Norway   |
+|       33 | Puneria  | Sagar     | #16-1, kareemabad road | Warangal |
++----------+----------+-----------+------------------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE TestTable AS SELECT LastName, FirstName FROM Persons;
+Query OK, 2 rows affected (0.07 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| TestTable        |
++------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM TestTable;
++----------+-----------+
+| LastName | FirstName |
++----------+-----------+
+| Tom      | Erichsen  |
+| Puneria  | Sagar     |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> TRUNCATE TABLE TestTable;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT * FROM TestTable;
+Empty set (0.00 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| TestTable        |
++------------------+
+2 rows in set (0.00 sec)
+
+mysql> DROP TABLE TestTable;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE TestTable AS SELECT LastName, FirstName FROM Persons;
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| TestTable        |
++------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------------------+----------+
+| PersonID | LastName | FirstName | Address                | City     |
++----------+----------+-----------+------------------------+----------+
+|       32 | Tom      | Erichsen  | Stavanger              | Norway   |
+|       32 | Puneria  | Sagar     | #16-1, kareemabad road | Warangal |
++----------+----------+-----------+------------------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM TestTable;
++----------+-----------+
+| LastName | FirstName |
++----------+-----------+
+| Tom      | Erichsen  |
+| Puneria  | Sagar     |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+SQL ALTER TABLE Statement:
+The ALTER TABLE statement is used to add, delete, or modify columns in an existing table.
+The ALTER TABLE statement is also used to add and drop various constraints on an existing table.
+
+To add a column in a table, use the following syntax:
+mysql> ALTER TABLE TestTable ADD City varchar(255);
+Query OK, 2 rows affected (0.09 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM TestTable;
++----------+-----------+------+
+| LastName | FirstName | City |
++----------+-----------+------+
+| Tom      | Erichsen  | NULL |
+| Puneria  | Sagar     | NULL |
++----------+-----------+------+
+2 rows in set (0.00 sec)
+
+To change the data type of a column in a table, use the following syntax:
+mysql> ALTER TABLE TestTable MODIFY COLUMN City BLOB;
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+To delete a column in a table, use the following syntax:
+mysql> ALTER TABLE TestTable DROP COLUMN City;
+Query OK, 2 rows affected (0.10 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM TestTable;
++----------+-----------+
+| LastName | FirstName |
++----------+-----------+
+| Tom      | Erichsen  |
+| Puneria  | Sagar     |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+The following constraints are commonly used in SQL:
+NOT NULL - Ensures that a column cannot have a NULL value
+UNIQUE - Ensures that all values in a column are different
+PRIMARY KEY - A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table
+FOREIGN KEY - Uniquely identifies a row/record in another table
+CHECK - Ensures that all values in a column satisfies a specific condition
+DEFAULT - Sets a default value for a column when no value is specified
+
+SQL NOT NULL Constraint:
+mysql> CREATE TABLE Persons2 (
+    ->     ID int NOT NULL,
+    ->     FirstName varchar(255) NOT NULL,
+    ->     LastName varchar(255),
+    ->     Address varchar(255),
+    ->     Age int
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| Persons2         |
+| TestTable        |
++------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons2;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Persons2 (Address) VALUES ('Hyd');
+Query OK, 1 row affected, 2 warnings (0.06 sec)
+
+mysql> SELECT * FROM Persons2;
++----+-----------+----------+---------+------+
+| ID | FirstName | LastName | Address | Age  |
++----+-----------+----------+---------+------+
+|  0 |           | NULL     | Hyd     | NULL |
++----+-----------+----------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE Persons2 SET FirstName='John', LastName = 'Wick' WHERE ID = 0;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Persons2;
++----+-----------+----------+---------+------+
+| ID | FirstName | LastName | Address | Age  |
++----+-----------+----------+---------+------+
+|  0 | John      | Wick     | Hyd     | NULL |
++----+-----------+----------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE Persons2 MODIFY Age int NOT NULL;
+Query OK, 1 row affected, 1 warning (0.15 sec)
+Records: 1  Duplicates: 0  Warnings: 1
+
+mysql> SELECT * FROM Persons2;
++----+-----------+----------+---------+-----+
+| ID | FirstName | LastName | Address | Age |
++----+-----------+----------+---------+-----+
+|  0 | John      | Wick     | Hyd     |   0 |
++----+-----------+----------+---------+-----+
+1 row in set (0.00 sec)
+
+mysql> UPDATE Persons2 SET Age=26 WHERE ID = 0;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Persons2;
++----+-----------+----------+---------+-----+
+| ID | FirstName | LastName | Address | Age |
++----+-----------+----------+---------+-----+
+|  0 | John      | Wick     | Hyd     |  26 |
++----+-----------+----------+---------+-----+
+1 row in set (0.00 sec)
+
+mysql> UPDATE Persons2 SET ID=1 WHERE ID = 0;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Persons2;
++----+-----------+----------+---------+-----+
+| ID | FirstName | LastName | Address | Age |
++----+-----------+----------+---------+-----+
+|  1 | John      | Wick     | Hyd     |  26 |
++----+-----------+----------+---------+-----+
+1 row in set (0.00 sec)
+
+SQL UNIQUE Constraint:
+The UNIQUE constraint ensures that all values in a column are different.
+A PRIMARY KEY constraint automatically has a UNIQUE constraint.
+However, you can have many UNIQUE constraints per table, but only one PRIMARY KEY constraint per table.
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| Persons2         |
+| TestTable        |
++------------------+
+3 rows in set (0.00 sec)
+
+mysql>CREATE TABLE Persons9 (
+    -> ID int UNIQUE,
+    -> LastName varchar(255) NOT NULL,
+    -> Age int
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO Persons9(LastName) values('sagar');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT * FROM Persons9;
++------+----------+------+
+| ID   | LastName | Age  |
++------+----------+------+
+| NULL | sagar    | NULL |
++------+----------+------+
+1 row in set (0.00 sec)
+
+mysql> DESCRIBE Persons9;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| ID       | int(11)      | YES  | UNI | NULL    |       |
+| LastName | varchar(255) | NO   |     | NULL    |       |
+| Age      | int(11)      | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons9(LastName) values('sagar2');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT * FROM Persons9;
++------+----------+------+
+| ID   | LastName | Age  |
++------+----------+------+
+| NULL | sagar    | NULL |
+| NULL | sagar2   | NULL |
++------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE Persons9 SET ID=1 WHERE LastName='sagar';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Persons9;
++------+----------+------+
+| ID   | LastName | Age  |
++------+----------+------+
+|    1 | sagar    | NULL |
+| NULL | sagar2   | NULL |
++------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE Persons9 SET ID=1 WHERE LastName='sagar2';
+ERROR 1062 (23000): Duplicate entry '1' for key 'ID'
+NOTE:Since column "ID" is UNIQUE constraint.
+mysql> UPDATE Persons9 SET ID=2 WHERE LastName='sagar2';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Persons9;
++------+----------+------+
+| ID   | LastName | Age  |
++------+----------+------+
+|    1 | sagar    | NULL |
+|    2 | sagar2   | NULL |
++------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons9 WHERE LastName='sagar';
++------+----------+------+
+| ID   | LastName | Age  |
++------+----------+------+
+|    1 | sagar    | NULL |
++------+----------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Persons9 WHERE LastName LIKE 'sagar';
++------+----------+------+
+| ID   | LastName | Age  |
++------+----------+------+
+|    1 | sagar    | NULL |
++------+----------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Persons9 WHERE LastName='sagar%';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM Persons9 WHERE LastName LIKE 'sagar%';
++------+----------+------+
+| ID   | LastName | Age  |
++------+----------+------+
+|    1 | sagar    | NULL |
+|    2 | sagar2   | NULL |
++------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons9 WHERE LastName LIKE 'agar%';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM Persons9 WHERE LastName LIKE '%agar%';
++------+----------+------+
+| ID   | LastName | Age  |
++------+----------+------+
+|    1 | sagar    | NULL |
+|    2 | sagar2   | NULL |
++------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons9 WHERE LastName LIKE 'sagar%'\G
+*************************** 1. row ***************************
+      ID: 1
+LastName: sagar
+     Age: NULL
+*************************** 2. row ***************************
+      ID: 2
+LastName: sagar2
+     Age: NULL
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Persons3 (
+    ->     ID int NOT NULL UNIQUE,
+    ->     LastName varchar(255) NOT NULL,
+    ->     FirstName varchar(255),
+    -> 	   Address varchar(255),
+    ->     Age int
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> DESCRIBE Persons3;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| ID        | int(11)      | NO   |     | NULL    |       |
+| LastName  | varchar(255) | NO   |     | NULL    |       |
+| FirstName | varchar(255) | YES  |     | NULL    |       |
+| Address   | varchar(255) | YES  |     | NULL    |       |
+| Age       | int(11)      | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| Persons9         |
+| Persons2         |
+| Persons3         |
+| TestTable        |
++------------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons3;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Persons3 (Address) VALUES ('Hyd');
+Query OK, 1 row affected, 2 warnings (0.06 sec)
+
+mysql> SELECT * FROM Persons3;
++----+----------+-----------+---------+------+
+| ID | LastName | FirstName | Address | Age  |
++----+----------+-----------+---------+------+
+|  0 |          | NULL      | Hyd     | NULL |
++----+----------+-----------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Persons3 (Address) VALUES ('Hyd');
+ERROR 1062 (23000): Duplicate entry '0' for key 'ID'
+NOTE:Since column "ID" is UNIQUE constraint.
+
+mysql> INSERT INTO Persons3 (ID, Address) VALUES (1, 'Hyd');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> SELECT * FROM Persons3;
++----+----------+-----------+---------+------+
+| ID | LastName | FirstName | Address | Age  |
++----+----------+-----------+---------+------+
+|  0 |          | NULL      | Hyd     | NULL |
+|  1 |          | NULL      | Hyd     | NULL |
++----+----------+-----------+---------+------+
+2 rows in set (0.00 sec)
+
+Note:To name a UNIQUE constraint, and to define a UNIQUE constraint on multiple columns, use below syntax[Ex:CONSTRAINT UC_Person UNIQUE (ID,LastName)]
+mysql> CREATE TABLE Persons4 (
+    -> ID int NOT NULL,
+    -> LastName varchar(255) NOT NULL,
+    -> FirstName varchar(255),
+    -> Address varchar(255),
+    -> Age int,
+    -> CONSTRAINT UC_Person UNIQUE (ID,LastName)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| Persons2         |
+| Persons3         |
+| Persons4         |
+| TestTable        |
++------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons4;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Persons4 (Address) VALUES ('Hyd');
+Query OK, 1 row affected, 2 warnings (0.05 sec)
+
+mysql> SELECT * FROM Persons4;
++----+----------+-----------+---------+------+
+| ID | LastName | FirstName | Address | Age  |
++----+----------+-----------+---------+------+
+|  0 |          | NULL      | Hyd     | NULL |
++----+----------+-----------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Persons4 (Address) VALUES ('Hyd');
+ERROR 1062 (23000): Duplicate entry '0-' for key 'UC_Person'
+NOTE:Since column "ID", "LastName" are UNIQUE constraint, but Duplicate entry is due to "ID"/"LastName" constraint.
+
+mysql> INSERT INTO Persons4 (ID, Address) VALUES (1, 'Hyd');
+Query OK, 1 row affected, 1 warning (0.04 sec)
+
+mysql> SELECT * FROM Persons4;
++----+----------+-----------+---------+------+
+| ID | LastName | FirstName | Address | Age  |
++----+----------+-----------+---------+------+
+|  0 |          | NULL      | Hyd     | NULL |
+|  1 |          | NULL      | Hyd     | NULL |
++----+----------+-----------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE Persons4 SET LastName='John' WHERE ID=0;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Persons4;
++----+----------+-----------+---------+------+
+| ID | LastName | FirstName | Address | Age  |
++----+----------+-----------+---------+------+
+|  0 | John     | NULL      | Hyd     | NULL |
+|  1 |          | NULL      | Hyd     | NULL |
++----+----------+-----------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons4 (LastName, Address) VALUES ('John', 'Hyderabad');
+ERROR 1062 (23000): Duplicate entry '0-John' for key 'UC_Person'
+NOTE:Since column "ID", "LastName" are UNIQUE constraint, but Duplicate entry is due to "ID"/"LastName" constraint.
+
+mysql> INSERT INTO Persons4 (LastName, Address) VALUES ('Tom', 'Hyderabad');
+Query OK, 1 row affected, 1 warning (0.06 sec)
+
+mysql> SELECT * FROM Persons4;
++----+----------+-----------+-----------+------+
+| ID | LastName | FirstName | Address   | Age  |
++----+----------+-----------+-----------+------+
+|  0 | John     | NULL      | Hyd       | NULL |
+|  0 | Tom      | NULL      | Hyderabad | NULL |
+|  1 |          | NULL      | Hyd       | NULL |
++----+----------+-----------+-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons4 (Address) VALUES ('Hyd');
+Query OK, 1 row affected, 2 warnings (0.06 sec)
+
+mysql> SELECT * FROM Persons4;
++----+----------+-----------+-----------+------+
+| ID | LastName | FirstName | Address   | Age  |
++----+----------+-----------+-----------+------+
+|  0 |          | NULL      | Hyd       | NULL |
+|  0 | John     | NULL      | Hyd       | NULL |
+|  0 | Tom      | NULL      | Hyderabad | NULL |
+|  1 |          | NULL      | Hyd       | NULL |
++----+----------+-----------+-----------+------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons4 (Address) VALUES ('Hyd');
+ERROR 1062 (23000): Duplicate entry '0-' for key 'UC_Person'
+mysql> INSERT INTO Persons4 (Address) VALUES ('RangaReddy');
+ERROR 1062 (23000): Duplicate entry '0-' for key 'UC_Person'
+mysql> INSERT INTO Persons4 (ID, Address) VALUES (0, 'RangaReddy');
+ERROR 1062 (23000): Duplicate entry '0-' for key 'UC_Person'
+mysql> INSERT INTO Persons4 (ID, Address) VALUES (1, 'RangaReddy');
+ERROR 1062 (23000): Duplicate entry '1-' for key 'UC_Person'
+NOTE:Since column "ID", "LastName" are UNIQUE constraint, but Duplicate entry is due to "ID"/"LastName" constraint.
+
+mysql> INSERT INTO Persons4 (ID, Address) VALUES (2, 'RangaReddy');
+Query OK, 1 row affected, 1 warning (0.06 sec)
+
+mysql> SELECT * FROM Persons4;
++----+----------+-----------+------------+------+
+| ID | LastName | FirstName | Address    | Age  |
++----+----------+-----------+------------+------+
+|  0 |          | NULL      | Hyd        | NULL |
+|  0 | John     | NULL      | Hyd        | NULL |
+|  0 | Tom      | NULL      | Hyderabad  | NULL |
+|  1 |          | NULL      | Hyd        | NULL |
+|  2 |          | NULL      | RangaReddy | NULL |
++----+----------+-----------+------------+------+
+5 rows in set (0.00 sec)
+
+To create a UNIQUE constraint on the "Age" column when the table is already created, use the following SQL:
+mysql> ALTER TABLE Persons4 ADD UNIQUE(Age);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Persons4;
++----+----------+-----------+------------+------+
+| ID | LastName | FirstName | Address    | Age  |
++----+----------+-----------+------------+------+
+|  0 |          | NULL      | Hyd        | NULL |
+|  0 | John     | NULL      | Hyd        | NULL |
+|  0 | Tom      | NULL      | Hyderabad  | NULL |
+|  1 |          | NULL      | Hyd        | NULL |
+|  2 |          | NULL      | RangaReddy | NULL |
++----+----------+-----------+------------+------+
+5 rows in set (0.00 sec)
+
+To name a UNIQUE constraint, and to define a UNIQUE constraint on multiple columns, use the following SQL syntax:
+mysql> ALTER TABLE Persons4 ADD CONSTRAINT UC_Person UNIQUE(FirstName,Address);
+ERROR 1061 (42000): Duplicate key name 'UC_Person'
+Note: Beacuse 'UC_Person' is already given for "ID" and "LastName" columns.
+mysql> ALTER TABLE Persons4 ADD CONSTRAINT UC_PerRson UNIQUE(FirstName,Address);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Persons4 DROP INDEX UC_PerRson;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| Persons2         |
+| Persons3         |
+| Persons4         |
+| TestTable        |
++------------------+
+5 rows in set (0.00 sec)
+
+SQL PRIMARY KEY Constraint:
+The PRIMARY KEY constraint uniquely identifies each record in a table.
+Primary keys must contain UNIQUE values, and cannot contain NULL values.
+A table can have only one primary key, which may consist of single or multiple fields/columns.
+
+mysql> CREATE TABLE Persons5 (
+    ->     ID int NOT NULL,
+    ->     LastName varchar(255) NOT NULL,
+    ->     FirstName varchar(255),
+    -> 	   Address varchar(255),
+    ->     Age int,
+    ->     PRIMARY KEY (ID)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| Persons2         |
+| Persons3         |
+| Persons4         |
+| Persons5         |
+| TestTable        |
++------------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons5;
+Empty set (0.00 sec)
+
+mysql> DESCRIBE Persons5;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| ID        | int(11)      | NO   | PRI | NULL    |       |
+| LastName  | varchar(255) | NO   |     | NULL    |       |
+| FirstName | varchar(255) | YES  |     | NULL    |       |
+| Address   | varchar(255) | YES  |     | NULL    |       |
+| Age       | int(11)      | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+To allow naming of a PRIMARY KEY constraint, and for defining a PRIMARY KEY constraint on multiple columns, use the following SQL syntax:
+mysql> CREATE TABLE Persons6 (
+    ->     ID int NOT NULL,
+    ->     LastName varchar(255) NOT NULL,
+    ->     FirstName varchar(255),
+    ->     Address varchar(255),
+    ->     Age int,
+    ->     CONSTRAINT PK_Person PRIMARY KEY (ID,LastName)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> ALTER TABLE Persons6 ADD PRIMARY KEY(FirstName);
+ERROR 1068 (42000): Multiple primary key defined
+Note:A table can have only one primary key, which may consist of single or multiple fields/columns
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| Persons2         |
+| Persons3         |
+| Persons4         |
+| Persons5         |
+| Persons6         |
+| TestTable        |
++------------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons6;
+Empty set (0.00 sec)
+
+mysql> ALTER TABLE Persons6 MODIFY FirstName varchar(255) NOT NULL;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Persons6 (Address) VALUES ('RangaReddy');
+Query OK, 1 row affected, 3 warnings (0.07 sec)
+
+mysql> SELECT * FROM Persons6;
++----+----------+-----------+------------+------+
+| ID | LastName | FirstName | Address    | Age  |
++----+----------+-----------+------------+------+
+|  0 |          |           | RangaReddy | NULL |
++----+----------+-----------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Persons6 (Address) VALUES ('RangaReddy');
+ERROR 1062 (23000): Duplicate entry '0-' for key 'PRIMARY'
+mysql> INSERT INTO Persons6 (LastName, Address) VALUES ('John', 'RangaReddy');
+Query OK, 1 row affected, 2 warnings (0.08 sec)
+
+mysql> SELECT * FROM Persons6;
++----+----------+-----------+------------+------+
+| ID | LastName | FirstName | Address    | Age  |
++----+----------+-----------+------------+------+
+|  0 |          |           | RangaReddy | NULL |
+|  0 | John     |           | RangaReddy | NULL |
++----+----------+-----------+------------+------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons6 (Address) VALUES ('RangaReddy');
+ERROR 1062 (23000): Duplicate entry '0-' for key 'PRIMARY'
+mysql> INSERT INTO Persons6 (ID, Address) VALUES (1, 'RangaReddy');
+Query OK, 1 row affected, 2 warnings (0.00 sec)
+
+mysql> SELECT * FROM Persons6;
++----+----------+-----------+------------+------+
+| ID | LastName | FirstName | Address    | Age  |
++----+----------+-----------+------------+------+
+|  0 |          |           | RangaReddy | NULL |
+|  0 | John     |           | RangaReddy | NULL |
+|  1 |          |           | RangaReddy | NULL |
++----+----------+-----------+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Persons7 (
+    ->     ID int NOT NULL,
+    ->     LastName varchar(255) NOT NULL,
+    ->     FirstName varchar(255),
+    ->     Address varchar(255),
+    ->     Age int
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| Persons2         |
+| Persons3         |
+| Persons4         |
+| Persons5         |
+| Persons6         |
+| Persons7         |
+| TestTable        |
++------------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons7;
+Empty set (0.00 sec)
+
+Note: If you use the ALTER TABLE statement to add a primary key, the primary key column(s) 
+	  must already have been declared to not contain NULL values (when the table was first created).
+mysql> ALTER TABLE Persons7 ADD PRIMARY KEY(FirstName);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Persons7 ADD PRIMARY KEY(ID);
+ERROR 1068 (42000): Multiple primary key defined
+Note:A table can have only one primary key, which may consist of single or multiple fields/columns
+
+mysql> INSERT INTO Persons7 (Address) VALUES ('RangaReddy');
+Query OK, 1 row affected, 2 warnings (0.06 sec)
+
+mysql> SELECT * FROM Persons7;
++----+----------+-----------+------------+------+
+| ID | LastName | FirstName | Address    | Age  |
++----+----------+-----------+------------+------+
+|  0 |          |           | RangaReddy | NULL |
++----+----------+-----------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE Persons7 ADD PRIMARY KEY(ID);
+ERROR 1068 (42000): Multiple primary key defined
+Note:A table can have only one primary key, which may consist of single or multiple fields/columns
+mysql> ALTER TABLE Persons7 DROP PRIMARY KEY;
+Query OK, 1 row affected (0.03 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Persons7 ADD PRIMARY KEY(ID);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Persons7;
++----+----------+-----------+------------+------+
+| ID | LastName | FirstName | Address    | Age  |
++----+----------+-----------+------------+------+
+|  0 |          |           | RangaReddy | NULL |
++----+----------+-----------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE Persons7 DROP PRIMARY KEY;
+mysql> ALTER TABLE Persons7 ADD PRIMARY KEY(ID, LastName);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Persons7;
++----+----------+-----------+------------+------+
+| ID | LastName | FirstName | Address    | Age  |
++----+----------+-----------+------------+------+
+|  0 |          |           | RangaReddy | NULL |
++----+----------+-----------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Persons7 (Address) VALUES ('RangaReddy');
+ERROR 1062 (23000): Duplicate entry '0-' for key 'PRIMARY'
+mysql> INSERT INTO Persons7 (LastName, Address) VALUES ('John', 'RangaReddy');
+Query OK, 1 row affected, 1 warning (0.08 sec)
+
+mysql> SELECT * FROM Persons7;
++----+----------+-----------+------------+------+
+| ID | LastName | FirstName | Address    | Age  |
++----+----------+-----------+------------+------+
+|  0 |          |           | RangaReddy | NULL |
+|  0 | John     |           | RangaReddy | NULL |
++----+----------+-----------+------------+------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons7 (LastName, Address) VALUES ('John', 'RangaReddy');
+ERROR 1062 (23000): Duplicate entry '0-John' for key 'PRIMARY'
+mysql> INSERT INTO Persons7 (ID, Address) VALUES (1, 'RangaReddy');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> SELECT * FROM Persons7;
++----+----------+-----------+------------+------+
+| ID | LastName | FirstName | Address    | Age  |
++----+----------+-----------+------------+------+
+|  0 |          |           | RangaReddy | NULL |
+|  0 | John     |           | RangaReddy | NULL |
+|  1 |          |           | RangaReddy | NULL |
++----+----------+-----------+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Persons8 (
+    ->     PersonID int NOT NULL,
+    ->     LastName varchar(255) NOT NULL,
+    ->     FirstName varchar(255),
+    ->     Age int,
+    ->     PRIMARY KEY (PersonID)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Persons          |
+| Persons2         |
+| Persons3         |
+| Persons4         |
+| Persons5         |
+| Persons6         |
+| Persons7         |
+| Persons8         |
+| TestTable        |
++------------------+
+9 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons8 (PersonID, LastName, FirstName, Age) VALUES (1, 'Hansen', 'Ola', 30);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO Persons8 (PersonID, LastName, FirstName, Age) VALUES (2, 'Svendson', 'Tove', 23);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO Persons8 (PersonID, LastName, FirstName, Age) VALUES (3, 'Pettersen', 'Kari', 20);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM Persons8;
++----------+-----------+-----------+------+
+| PersonID | LastName  | FirstName | Age  |
++----------+-----------+-----------+------+
+|        1 | Hansen    | Ola       |   30 |
+|        2 | Svendson  | Tove      |   23 |
+|        3 | Pettersen | Kari      |   20 |
++----------+-----------+-----------+------+
+3 rows in set (0.00 sec)
+
+SQL FOREIGN KEY Constraint:
+A FOREIGN KEY is a key used to link two tables together.
+A FOREIGN KEY is a field (or collection of fields) in one table that refers to the PRIMARY KEY in another table.
+The table containing the foreign key is called the child table, and the table containing the candidate key is called the referenced or parent table.
+mysql> CREATE TABLE Orders (
+    ->     OrderID int NOT NULL,
+    ->     OrderNumber int NOT NULL,
+    ->     CandidateID int,
+    ->     PRIMARY KEY (OrderID),
+    ->     FOREIGN KEY (CandidateID) REFERENCES Persons8(PersonID)
+    -> );
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Orders           |
+| Persons          |
+| Persons2         |
+| Persons3         |
+| Persons4         |
+| Persons5         |
+| Persons6         |
+| Persons7         |
+| Persons8         |
+| TestTable        |
++------------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Orders(OrderID, OrderNumber, CandidateID) VALUES (1, 77895, 3);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+
+| OrderID | OrderNumber | CandidateID |
++---------+-------------+-------------+
+|       1 |       77895 |           3 |
++---------+-------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Orders VALUES(9, 21332, 4);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`testDB`.`Orders`, CONSTRAINT `Orders_ibfk_1` FOREIGN KEY (`CandidateID`) REFERENCES `Persons8` (`PersonID`))
+***NOTE: We can not insert value 4 into column CandidateID of Orders table, because value 4 is not present in column PersonsID of Persons8 table
+
+mysql> SELECT * FROM Persons8;
++----------+-----------+-----------+------+
+| PersonID | LastName  | FirstName | Age  |
++----------+-----------+-----------+------+
+|        1 | Hansen    | Ola       |   30 |
+|        2 | Svendson  | Tove      |   23 |
+|        3 | Pettersen | Kari      |   20 |
++----------+-----------+-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons8 VALUES(3,'DQWESD','KYUMYH',20);
+ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
+mysql> INSERT INTO Persons8 VALUES(4,'DQWESD','KYUMYH',20);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM Persons8;
++----------+-----------+-----------+------+
+| PersonID | LastName  | FirstName | Age  |
++----------+-----------+-----------+------+
+|        1 | Hansen    | Ola       |   30 |
+|        2 | Svendson  | Tove      |   23 |
+|        3 | Pettersen | Kari      |   20 |
+|        4 | DQWESD    | KYUMYH    |   20 |
++----------+-----------+-----------+------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO Orders VALUES(9, 21332, 4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders(OrderID, OrderNumber, CandidateID) VALUES (2, 44678, 3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders(OrderID, OrderNumber, CandidateID) VALUES (3,22456 , 2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders(OrderID, OrderNumber, CandidateID) VALUES (4, 24562, 1);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+
+| OrderID | OrderNumber | CandidateID |
++---------+-------------+-------------+
+|       1 |       77895 |           3 |
+|       9 |       21332 |           4 |
+|       2 |       44678 |           3 |
+|       3 |       22456 |           2 |
+|       4 |       24562 |           1 |
++---------+-------------+-------------+
+4 rows in set (0.00 sec)
+
+Notice that the "CandidateID" column in the "Orders" table points to the "PersonID" column in the "Persons8" table.
+The "PersonID" column in the "Persons8" table is the PRIMARY KEY in the "Persons8" table.
+The "CandidateID" column in the "Orders" table is a FOREIGN KEY in the "Orders" table.
+The FOREIGN KEY constraint is used to prevent actions that would destroy links between tables.
+***The FOREIGN KEY constraint also prevents invalid data from being inserted into the foreign key column(Orders),
+   because it has to be one of the values contained in the table(Persons8) it points to.
+
+To allow naming of a FOREIGN KEY constraint, and for defining a FOREIGN KEY constraint on multiple columns, use the following SQL syntax:
+mysql> CREATE TABLE Orders2 (
+    ->     OrderID int NOT NULL,
+    ->     OrderNumber int NOT NULL,
+    ->     CandidateID int,
+    ->     PRIMARY KEY (OrderID),
+    ->     CONSTRAINT FK_PersonOrder FOREIGN KEY (CandidateID)
+    ->     REFERENCES Persons8(PersonID)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> SELECT * FROM Orders2;
+Empty set (0.00 sec)
+
+DROP a FOREIGN KEY Constraint:
+To drop a FOREIGN KEY constraint, use the following SQL:
+mysql> ALTER TABLE Orders2 DROP FOREIGN KEY FK_PersonOrder;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+SQL FOREIGN KEY on ALTER TABLE:
+To create a FOREIGN KEY constraint on the "PersonID" column when the "Orders" table is already created, use the following SQL:
+mysql> ALTER TABLE Orders2 ADD FOREIGN KEY (CandidateID) REFERENCES Persons8(PersonID);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+SQL CHECK Constraint:
+The CHECK constraint is used to limit the value range that can be placed in a column.
+If you define a CHECK constraint on a single column it allows only certain values for this column.
+If you define a CHECK constraint on a table it can limit the values in certain columns based on values in other columns in the row.
+
+mysql> CREATE TABLE Persons9 (
+    -> ID INT NOT NULL,
+    -> LastName VARCHAR(255) NOT NULL,
+    -> FistName VARCHAR(255),
+    -> Age INT,
+    -> CHECK (Age>=18)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> SELECT * FROM Persons9;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Persons9(Age) VALUES(9);
+Query OK, 1 row affected, 2 warnings (0.02 sec)
+
+mysql> SELECT * FROM Persons9;
++----+----------+----------+------+
+| ID | LastName | FistName | Age  |
++----+----------+----------+------+
+|  0 |          | NULL     |    9 |
++----+----------+----------+------+
+1 row in set (0.00 sec)
+
+SQL DEFAULT Constraint:
+The DEFAULT constraint is used to provide a default value for a column.
+The default value will be added to all new records IF no other value is specified.
+
+Syntax:
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Sandnes'
+);
+
+mysql> CREATE TABLE Persons10 (
+    -> ID int NOT NULL,
+    -> LastName varchar(255) NOT NULL,
+    -> FirstName varchar(255),
+    -> Age int,
+    -> City varchar(255) DEFAULT 'Sandnes'
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SELECT * FROM Persons10;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Persons10(FirstName, Age) VALUES('Sagar', 26);
+Query OK, 1 row affected, 2 warnings (0.02 sec)
+
+mysql> SELECT * FROM Persons10;
++----+----------+-----------+------+---------+
+| ID | LastName | FirstName | Age  | City    |
++----+----------+-----------+------+---------+
+|  0 |          | Sagar     |   26 | Sandnes |
++----+----------+-----------+------+---------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Persons10(Age) VALUES(27);
+Query OK, 1 row affected, 2 warnings (0.06 sec)
+
+mysql> SELECT * FROM Persons10;
++----+----------+-----------+------+---------+
+| ID | LastName | FirstName | Age  | City    |
++----+----------+-----------+------+---------+
+|  0 |          | Sagar     |   26 | Sandnes |
+|  0 |          | NULL      |   27 | Sandnes |
++----+----------+-----------+------+---------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons10(Age, City) VALUES(28,'Hyd');
+Query OK, 1 row affected, 2 warnings (0.06 sec)
+
+mysql> SELECT * FROM Persons10;
++----+----------+-----------+------+---------+
+| ID | LastName | FirstName | Age  | City    |
++----+----------+-----------+------+---------+
+|  0 |          | Sagar     |   26 | Sandnes |
+|  0 |          | NULL      |   27 | Sandnes |
+|  0 |          | NULL      |   28 | Hyd     |
++----+----------+-----------+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Persons12 ( ID int NOT NULL, LastName varchar(255) NOT NULL, FirstName varchar(255), Age int, City varchar(255) );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO Persons12(Age) VALUES(27);
+Query OK, 1 row affected, 2 warnings (0.06 sec)
+
+mysql> SELECT * FROM Persons12;
++----+----------+-----------+------+------+
+| ID | LastName | FirstName | Age  | City |
++----+----------+-----------+------+------+
+|  0 |          | NULL      |   27 | NULL |
++----+----------+-----------+------+------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE Persons12
+    -> ALTER City SET DEFAULT 'Hyderabad';
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Persons12(Age) VALUES(28);
+Query OK, 1 row affected, 2 warnings (0.03 sec)
+
+mysql> SELECT * FROM Persons12;
++----+----------+-----------+------+-----------+
+| ID | LastName | FirstName | Age  | City      |
++----+----------+-----------+------+-----------+
+|  0 |          | NULL      |   27 | NULL      |
+|  0 |          | NULL      |   28 | Hyderabad |
++----+----------+-----------+------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Persons12
+    -> ALTER City DROP DEFAULT;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Persons12(Age) VALUES(29);
+Query OK, 1 row affected, 3 warnings (0.05 sec)
+
+mysql> SELECT * FROM Persons12;
++----+----------+-----------+------+-----------+
+| ID | LastName | FirstName | Age  | City      |
++----+----------+-----------+------+-----------+
+|  0 |          | NULL      |   27 | NULL      |
+|  0 |          | NULL      |   28 | Hyderabad |
+|  0 |          | NULL      |   29 | NULL      |
++----+----------+-----------+------+-----------+
+3 rows in set (0.00 sec)
+
+SQL CREATE INDEX Statement:
+The CREATE INDEX statement is used to create indexes in tables.
+Indexes are used to retrieve data from the database very fast. The users cannot see the indexes, they are just used to speed up searches/queries.
+Note: Updating a table with indexes takes more time than updating a table without (because the indexes also need an update). So, only create indexes on columns that will be frequently searched against.
+
+CREATE INDEX Syntax:
+Creates an index on a table. Duplicate values are allowed:
+
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
+CREATE UNIQUE INDEX Syntax
+Creates a unique index on a table. Duplicate values are not allowed:
+
+CREATE UNIQUE INDEX index_name
+ON table_name (column1, column2, ...);
+Note: The syntax for creating indexes varies among different databases. Therefore: Check the syntax for creating indexes in your database.
+
+mysql> DESCRIBE Persons8;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| PersonID  | int(11)      | NO   | PRI | NULL    |       |
+| LastName  | varchar(255) | NO   |     | NULL    |       |
+| FirstName | varchar(255) | YES  |     | NULL    |       |
+| Age       | int(11)      | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons8;
++----------+-----------+-----------+------+
+| PersonID | LastName  | FirstName | Age  |
++----------+-----------+-----------+------+
+|        1 | Hansen    | Ola       |   30 |
+|        2 | Svendson  | Tove      |   23 |
+|        3 | Pettersen | Kari      |   20 |
+|        4 | DQWESD    | KYUMYH    |   20 |
++----------+-----------+-----------+------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE INDEX idx_lastname
+    -> ON Persons8 (LastName);
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Persons8;
++----------+-----------+-----------+------+
+| PersonID | LastName  | FirstName | Age  |
++----------+-----------+-----------+------+
+|        1 | Hansen    | Ola       |   30 |
+|        2 | Svendson  | Tove      |   23 |
+|        3 | Pettersen | Kari      |   20 |
+|        4 | DQWESD    | KYUMYH    |   20 |
++----------+-----------+-----------+------+
+4 rows in set (0.00 sec)
+
+mysql> DESCRIBE Persons8;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| PersonID  | int(11)      | NO   | PRI | NULL    |       |
+| LastName  | varchar(255) | NO   | MUL | NULL    |       |
+| FirstName | varchar(255) | YES  |     | NULL    |       |
+| Age       | int(11)      | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons2;
++----+-----------+----------+-----------+-----+-------------+
+| ID | FirstName | LastName | Address   | Age | CandidateID |
++----+-----------+----------+-----------+-----+-------------+
+|  1 | John      | Wick     | Hyd       |  26 |        NULL |
+|  3 | James     | Bond     | London    |  34 |           2 |
+|  2 | Tom       | Cruise   | Hyderabad |  27 |           1 |
++----+-----------+----------+-----------+-----+-------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE INDEX idx_lastname ON Persons2 (Age);
+Query OK, 0 rows affected (0.18 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Persons2;
++----+-----------+----------+-----------+-----+-------------+
+| ID | FirstName | LastName | Address   | Age | CandidateID |
++----+-----------+----------+-----------+-----+-------------+
+|  1 | John      | Wick     | Hyd       |  26 |        NULL |
+|  3 | James     | Bond     | London    |  34 |           2 |
+|  2 | Tom       | Cruise   | Hyderabad |  27 |           1 |
++----+-----------+----------+-----------+-----+-------------+
+3 rows in set (0.00 sec)
+
+mysql> DROP INDEX idx_lastname ON Persons2;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> CREATE UNIQUE INDEX idx_lastname ON Persons2 (Age);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Persons2;
++----+-----------+----------+-----------+-----+-------------+
+| ID | FirstName | LastName | Address   | Age | CandidateID |
++----+-----------+----------+-----------+-----+-------------+
+|  1 | John      | Wick     | Hyd       |  26 |        NULL |
+|  2 | Tom       | Cruise   | Hyderabad |  27 |           1 |
+|  3 | James     | Bond     | London    |  34 |           2 |
++----+-----------+----------+-----------+-----+-------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Persons13 (
+    -> ID INT NOT NULL AUTO_INCREMENT,
+    -> LastName VARCHAR(255) NOT NULL,
+    -> FirstName VARCHAR(255),
+    -> Age INT,
+    -> PRIMARY KEY (ID)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT * FROM Persons13;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Persons13(FirstName) VALUES('FirstName1');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> SELECT * FROM Persons13;
++----+----------+------------+------+
+| ID | LastName | FirstName  | Age  |
++----+----------+------------+------+
+|  1 |          | FirstName1 | NULL |
++----+----------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Persons13(FirstName) VALUES('FirstName2');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> SELECT * FROM Persons13;
++----+----------+------------+------+
+| ID | LastName | FirstName  | Age  |
++----+----------+------------+------+
+|  1 |          | FirstName1 | NULL |
+|  2 |          | FirstName2 | NULL |
++----+----------+------------+------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Persons13 AUTO_INCREMENT=100;
+Query OK, 2 rows affected (0.08 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Persons13(FirstName) VALUES('FirstName3');
+Query OK, 1 row affected, 1 warning (0.03 sec)
+
+mysql> SELECT * FROM Persons13;
++-----+----------+------------+------+
+| ID  | LastName | FirstName  | Age  |
++-----+----------+------------+------+
+|   1 |          | FirstName1 | NULL |
+|   2 |          | FirstName2 | NULL |
+| 100 |          | FirstName3 | NULL |
++-----+----------+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons13(FirstName) VALUES('FirstName4');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> SELECT * FROM Persons13;
++-----+----------+------------+------+
+| ID  | LastName | FirstName  | Age  |
++-----+----------+------------+------+
+|   1 |          | FirstName1 | NULL |
+|   2 |          | FirstName2 | NULL |
+| 100 |          | FirstName3 | NULL |
+| 101 |          | FirstName4 | NULL |
++-----+----------+------------+------+
+4 rows in set (0.00 sec)
+
+SQL CREATE VIEW Statement:
+In SQL, a view is a virtual table based on the result-set of an SQL statement.
+A view contains rows and columns, just like a real table. The fields in a view are fields from one or more real tables in the database.
+You can add SQL functions, WHERE, and JOIN statements to a view and present the data as if the data were coming from one single table.
+CREATE VIEW Syntax:
+CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+Note: A view always shows up-to-date data! The database engine recreates the data, using the view's SQL statement, every time a user queries a view.
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
+|       5 |        3343 |        NULL |       35 |
+|       6 |        2342 |        NULL |     NULL |
+|       7 |        1342 |           4 |     NULL |
++---------+-------------+-------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE VIEW Customer AS
+    -> SELECT OrderID, OrderNumber
+    -> FROM Orders
+    -> WHERE PersonID = 38;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT * FROM Customer;
++---------+-------------+
+| OrderID | OrderNumber |
++---------+-------------+
+|       1 |       77895 |
++---------+-------------+
+1 row in set (0.00 sec)
+
+SQL Injection:
+SQL injection is a code injection technique that might destroy your database.
+SQL injection is one of the most common web hacking techniques.
+SQL injection is the placement of malicious code in SQL statements, via web page input.
+
+SQL in Web Pages:
+SQL injection usually occurs when you ask a user for input, like their username/userid, and instead of a name/id, the user gives you an SQL statement
+ that you will unknowingly run on your database.
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
+|       5 |        3343 |        NULL |       35 |
+|       6 |        2342 |        NULL |     NULL |
+|       7 |        1342 |           4 |     NULL |
++---------+-------------+-------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders WHERE OrderID=5;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       5 |        3343 |        NULL |       35 |
++---------+-------------+-------------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Orders WHERE OrderID=5 OR 1=1;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
+|       5 |        3343 |        NULL |       35 |
+|       6 |        2342 |        NULL |     NULL |
+|       7 |        1342 |           4 |     NULL |
++---------+-------------+-------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders WHERE OrderID=15 OR 1=1;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
+|       5 |        3343 |        NULL |       35 |
+|       6 |        2342 |        NULL |     NULL |
+|       7 |        1342 |           4 |     NULL |
++---------+-------------+-------------+----------+
+7 rows in set (0.00 sec)
+
+
+
+
+
+
+mysql> SELECT * FROM TestTable;
++----------+-----------+
+| LastName | FirstName |
++----------+-----------+
+| Tom      | Erichsen  |
+| Puneria  | Sagar     |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons (PersonID, LastName, City) VALUES (34, 'John', 'Hyderbad');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------------------+----------+
+| PersonID | LastName | FirstName | Address                | City     |
++----------+----------+-----------+------------------------+----------+
+|       32 | Tom      | Erichsen  | Stavanger              | Norway   |
+|       33 | Puneria  | Sagar     | #16-1, kareemabad road | Warangal |
+|       34 | John     | NULL      | NULL                   | Hyderbad |
++----------+----------+-----------+------------------------+----------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT LastName, FirstName FROM Persons WHERE Address IS NULL;
++----------+-----------+
+| LastName | FirstName |
++----------+-----------+
+| John     | NULL      |
++----------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LastName, FirstName FROM Persons WHERE City IS NULL;
+Empty set (0.00 sec)
+
+mysql> SELECT LastName, FirstName FROM Persons WHERE Address IS NOT NULL;
++----------+-----------+
+| LastName | FirstName |
++----------+-----------+
+| Tom      | Erichsen  |
+| Puneria  | Sagar     |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT LastName, FirstName FROM Persons WHERE City IS NOT NULL;
++----------+-----------+
+| LastName | FirstName |
++----------+-----------+
+| Tom      | Erichsen  |
+| Puneria  | Sagar     |
+| John     | NULL      |
++----------+-----------+
+3 rows in set (0.00 sec)
+
+UPDATE Syntax:
+UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;
+Note: Be careful when updating records in a table! Notice the WHERE clause in the UPDATE statement. 
+	  The WHERE clause specifies which record(s) that should be updated. If you omit the WHERE clause, all records in the table will be updated!
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------------------+----------+
+| PersonID | LastName | FirstName | Address                | City     |
++----------+----------+-----------+------------------------+----------+
+|       32 | Tom      | Erichsen  | Stavanger              | Norway   |
+|       33 | Puneria  | Sagar     | #16-1, kareemabad road | Warangal |
+|       34 | John     | NULL      | NULL                   | Hyderbad |
++----------+----------+-----------+------------------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE Persons SET FirstName = 'Tom', LastName = 'Cruise' WHERE PersonID = 32;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------------------+----------+
+| PersonID | LastName | FirstName | Address                | City     |
++----------+----------+-----------+------------------------+----------+
+|       32 | Cruise   | Tom       | Stavanger              | Norway   |
+|       33 | Puneria  | Sagar     | #16-1, kareemabad road | Warangal |
+|       34 | John     | NULL      | NULL                   | Hyderbad |
++----------+----------+-----------+------------------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons (PersonID, LastName, City) VALUES (34, 'Wick', 'Gachibowli');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------------------+------------+
+| PersonID | LastName | FirstName | Address                | City       |
++----------+----------+-----------+------------------------+------------+
+|       32 | Cruise   | Tom       | Stavanger              | Norway     |
+|       33 | Puneria  | Sagar     | #16-1, kareemabad road | Warangal   |
+|       34 | John     | NULL      | NULL                   | Hyderbad   |
+|       34 | Wick     | NULL      | NULL                   | Gachibowli |
++----------+----------+-----------+------------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE Persons SET FirstName = 'John', LastName = 'Wick' WHERE PersonID = 34;
+Query OK, 2 rows affected (0.03 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------------------+------------+
+| PersonID | LastName | FirstName | Address                | City       |
++----------+----------+-----------+------------------------+------------+
+|       32 | Cruise   | Tom       | Stavanger              | Norway     |
+|       33 | Puneria  | Sagar     | #16-1, kareemabad road | Warangal   |
+|       34 | Wick     | John      | NULL                   | Hyderbad   |
+|       34 | Wick     | John      | NULL                   | Gachibowli |
++----------+----------+-----------+------------------------+------------+
+4 rows in set (0.00 sec)
+
+NOTE:Be careful when updating records. If you omit the WHERE clause, ALL records will be updated!
+
+mysql> UPDATE Persons SET FirstName = 'John', LastName = 'Wick';
+Query OK, 2 rows affected (0.07 sec)
+Rows matched: 4  Changed: 2  Warnings: 0
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------------------+------------+
+| PersonID | LastName | FirstName | Address                | City       |
++----------+----------+-----------+------------------------+------------+
+|       32 | Wick     | John      | Stavanger              | Norway     |
+|       33 | Wick     | John      | #16-1, kareemabad road | Warangal   |
+|       34 | Wick     | John      | NULL                   | Hyderbad   |
+|       34 | Wick     | John      | NULL                   | Gachibowli |
++----------+----------+-----------+------------------------+------------+
+4 rows in set (0.00 sec)
+
+DELETE Syntax:
+DELETE FROM table_name WHERE condition;
+Note: Be careful when deleting records in a table! Notice the WHERE clause in the DELETE statement. 
+	  The WHERE clause specifies which record(s) should be deleted. If you omit the WHERE clause, all records in the table will be deleted!
+
+mysql> DELETE FROM Persons WHERE City='Gachibowli';
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------------------+----------+
+| PersonID | LastName | FirstName | Address                | City     |
++----------+----------+-----------+------------------------+----------+
+|       32 | Wick     | John      | Stavanger              | Norway   |
+|       33 | Wick     | John      | #16-1, kareemabad road | Warangal |
+|       34 | Wick     | John      | NULL                   | Hyderbad |
++----------+----------+-----------+------------------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM Persons;
+Query OK, 3 rows affected (0.06 sec)
+
+mysql> SELECT * FROM Persons;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Persons (PersonID, LastName, FirstName, Address, City) VALUES (32, 'Tom', 'Erichsen', 'Stavanger', 'Norway');
+:
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
++----------+----------+--------------+---------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons LIMIT 2;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
++----------+----------+--------------+---------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons (PersonID, LastName, FirstName, Address, City) VALUES (29, 'ToM', 'SDCSchsen', 'SDStavanger', 'SVFXNorway');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       29 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
++----------+----------+--------------+---------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons WHERE LastName='tOm' LIMIT 2;
++----------+----------+-----------+-------------+------------+
+| PersonID | LastName | FirstName | Address     | City       |
++----------+----------+-----------+-------------+------------+
+|       32 | Tom      | Erichsen  | Stavanger   | Norway     |
+|       29 | ToM      | SDCSchsen | SDStavanger | SVFXNorway |
++----------+----------+-----------+-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT MIN(PersonID) AS SmallestPrice FROM Persons;
++---------------+
+| SmallestPrice |
++---------------+
+|            29 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(PersonID) FROM Persons WHERE PersonID<32;
++---------------+
+| MIN(PersonID) |
++---------------+
+|            29 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(PersonID) AS LargestPrice FROM Persons;
++--------------+
+| LargestPrice |
++--------------+
+|           32 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(PersonID) FROM Persons WHERE PersonID>2;
++---------------+
+| MAX(PersonID) |
++---------------+
+|            32 |
++---------------+
+1 row in set (0.06 sec)
+
+COUNT() Syntax:
+SELECT COUNT(column_name) FROM table_name WHERE condition;
+The COUNT() function returns the number of rows that matches a specified criteria.
+
+AVG() Syntax:
+SELECT AVG(column_name) FROM table_name WHERE condition;
+The AVG() function returns the average value of a numeric column.
+
+SUM() Syntax:
+SELECT SUM(column_name) FROM table_name WHERE condition;
+The SUM() function returns the total sum of a numeric column.
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       29 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
++----------+----------+--------------+---------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(LastName) FROM Persons;
++-----------------+
+| COUNT(LastName) |
++-----------------+
+|               4 |
++-----------------+
+1 row in set (0.07 sec)
+
+mysql> SELECT AVG(PersonID) FROM Persons;
++---------------+
+| AVG(PersonID) |
++---------------+
+|       30.0000 |
++---------------+
+1 row in set (0.05 sec)
+
+mysql> SELECT AVG(LastName) FROM Persons;
++---------------+
+| AVG(LastName) |
++---------------+
+|             0 |
++---------------+
+1 row in set, 4 warnings (0.05 sec)
+
+mysql> SELECT SUM(PersonID) FROM Persons;
++---------------+
+| SUM(PersonID) |
++---------------+
+|           120 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(LastName) FROM Persons;
++---------------+
+| SUM(LastName) |
++---------------+
+|             0 |
++---------------+
+1 row in set, 4 warnings (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM Persons;
++----------+
+| COUNT(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM Persons WHERE LastName='TOM';
++----------+
+| COUNT(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.07 sec)
+
+mysql> SELECT COUNT(LastName) FROM Persons WHERE LastName='TOM';
++-----------------+
+| COUNT(LastName) |
++-----------------+
+|               2 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(FirstName) FROM Persons WHERE LastName='TOM';
++------------------+
+| COUNT(FirstName) |
++------------------+
+|                2 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(FirstName) FROM Persons WHERE FirstName='TOM';
++------------------+
+| COUNT(FirstName) |
++------------------+
+|                0 |
++------------------+
+1 row in set (0.00 sec)
+
+The SQL LIKE Operator:
+The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+There are two wildcards used in conjunction with the LIKE operator:
+% - The percent sign represents zero, one, or multiple characters
+_ - The underscore represents a single character
+Note: MS Access uses a question mark (?) instead of the underscore (_).
+The percent sign and the underscore can also be used in combinations!
+
+SQL LIKE Syntax
+SELECT column1, column2, ...
+FROM table_name
+WHERE columnN LIKE pattern;
+Tip: You can also combine any number of conditions using AND or OR operators.
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       29 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
++----------+----------+--------------+---------------+--------------+
+4 rows in set (0.00 sec)
+
+The following SQL statement selects all Persons with a LastName starting with "t":
+mysql> SELECT * FROM Persons WHERE LastName LIKE 't%';
++----------+----------+-----------+-------------+------------+
+| PersonID | LastName | FirstName | Address     | City       |
++----------+----------+-----------+-------------+------------+
+|       32 | Tom      | Erichsen  | Stavanger   | Norway     |
+|       29 | ToM      | SDCSchsen | SDStavanger | SVFXNorway |
++----------+----------+-----------+-------------+------------+
+2 rows in set (0.00 sec)
+
+The following SQL statement selects all Persons with a LastName ending with "e":
+mysql> SELECT * FROM Persons WHERE LastName LIKE '%e';
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
++----------+----------+--------------+---------------+--------------+
+2 rows in set (0.00 sec)
+
+The following SQL statement selects all Persons with a FirstName that have "csch" in any position:
+mysql> SELECT * FROM Persons WHERE FirstName LIKE '%csch%';
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       29 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
++----------+----------+--------------+---------------+--------------+
+3 rows in set (0.00 sec)
+
+The following SQL statement selects all Persons with a LastName that have "o" in the second position:
+mysql> SELECT * FROM Persons WHERE LastName LIKE '_o%';
++----------+----------+-----------+-------------+------------+
+| PersonID | LastName | FirstName | Address     | City       |
++----------+----------+-----------+-------------+------------+
+|       32 | Tom      | Erichsen  | Stavanger   | Norway     |
+|       29 | ToM      | SDCSchsen | SDStavanger | SVFXNorway |
++----------+----------+-----------+-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons WHERE Address LIKE 's%r';
++----------+----------+-----------+-------------+------------+
+| PersonID | LastName | FirstName | Address     | City       |
++----------+----------+-----------+-------------+------------+
+|       32 | Tom      | Erichsen  | Stavanger   | Norway     |
+|       29 | UISE     | SDCSchsen | SDStavanger | SVFXNorway |
+|       29 | ToM      | SDCSchsen | SDStavanger | SVFXNorway |
++----------+----------+-----------+-------------+------------+
+3 rows in set (0.00 sec)
+
+The following SQL statement selects all customers with a ContactName that starts with "s" and ends with "r":
+mysql> SELECT * FROM Persons WHERE Address LIKE 's%r';
++----------+----------+-----------+-------------+------------+
+| PersonID | LastName | FirstName | Address     | City       |
++----------+----------+-----------+-------------+------------+
+|       32 | Tom      | Erichsen  | Stavanger   | Norway     |
+|       29 | UISE     | SDCSchsen | SDStavanger | SVFXNorway |
+|       29 | ToM      | SDCSchsen | SDStavanger | SVFXNorway |
++----------+----------+-----------+-------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons WHERE LastName NOT LIKE 't%';
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
++----------+----------+--------------+---------------+--------------+
+2 rows in set (0.00 sec)
+
+SQL IN Operator:
+The IN operator allows you to specify multiple values in a WHERE clause.
+The IN operator is a shorthand for multiple OR conditions.
+
+IN Syntax
+SELECT column_name(s) FROM table_name WHERE column_name IN (value1, value2, ...);
+[or]
+SELECT column_name(s) FROM table_name WHERE column_name IN (SELECT STATEMENT);
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       29 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
++----------+----------+--------------+---------------+--------------+
+4 rows in set (0.00 sec)
+
+The following SQL statement selects all Persons that are located in "Norway", "SVFXNorway"
+mysql> SELECT * FROM Persons WHERE City IN ('Norway', 'SVFXNorway');
++----------+----------+-----------+-------------+------------+
+| PersonID | LastName | FirstName | Address     | City       |
++----------+----------+-----------+-------------+------------+
+|       32 | Tom      | Erichsen  | Stavanger   | Norway     |
+|       29 | UISE     | SDCSchsen | SDStavanger | SVFXNorway |
+|       29 | ToM      | SDCSchsen | SDStavanger | SVFXNorway |
++----------+----------+-----------+-------------+------------+
+3 rows in set (0.00 sec)
+
+The following SQL statement selects all Persons that are NOT located in "Norway", "SVFXNorway"
+mysql> SELECT * FROM Persons WHERE City NOT IN ('Norway', 'SVFXNorway');
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
++----------+----------+--------------+---------------+--------------+
+1 row in set (0.00 sec)
+
+The following SQL statement selects all customers(TABLE) that are from the same countries(COLUMN) as the suppliers(TABLE):
+Example> SELECT * FROM Customers WHERE Country IN (SELECT Country FROM Suppliers);
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       29 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
++----------+----------+--------------+---------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE Persons SET PersonID=28 WHERE PersonID=29 AND LastName='ToM';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
++----------+----------+--------------+---------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons (PersonID, LastName, FirstName, Address, City) VALUES (31, 'Tommy', 'ichsen', 'Vanger', 'Orway');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+The SQL BETWEEN Operator:
+The BETWEEN operator selects values within a given range. The values can be numbers, text, or dates.
+The BETWEEN operator is inclusive: begin and end values are included. 
+
+BETWEEN Syntax:
+SELECT column_name(s) FROM table_name WHERE column_name BETWEEN value1 AND value2;
+
+mysql> SELECT * FROM Persons
+    -> WHERE PersonID BETWEEN 29 AND 31;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM Persons
+    -> WHERE PersonID BETWEEN 29 AND 31
+    -> ORDER BY PersonID;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons
+    -> WHERE PersonID NOT BETWEEN 29 AND 31;
++----------+----------+-----------+-------------+------------+
+| PersonID | LastName | FirstName | Address     | City       |
++----------+----------+-----------+-------------+------------+
+|       32 | Tom      | Erichsen  | Stavanger   | Norway     |
+|       28 | ToM      | SDCSchsen | SDStavanger | SVFXNorway |
++----------+----------+-----------+-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons
+    -> WHERE PersonID NOT BETWEEN 29 AND 31
+    -> ORDER BY PersonID;
++----------+----------+-----------+-------------+------------+
+| PersonID | LastName | FirstName | Address     | City       |
++----------+----------+-----------+-------------+------------+
+|       28 | ToM      | SDCSchsen | SDStavanger | SVFXNorway |
+|       32 | Tom      | Erichsen  | Stavanger   | Norway     |
++----------+----------+-----------+-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons
+    -> WHERE (PersonID BETWEEN 29 AND 31)
+    -> AND NOT LastName IN ('cRUISE', 'UISE');
++----------+----------+-----------+---------+-------+
+| PersonID | LastName | FirstName | Address | City  |
++----------+----------+-----------+---------+-------+
+|       31 | Tommy    | ichsen    | Vanger  | Orway |
++----------+----------+-----------+---------+-------+
+1 row in set (0.00 sec)
+
+SQL Aliases:
+SQL aliases are used to give a table, or a column in a table, a temporary name.
+Aliases are often used to make column names more readable.
+An alias only exists for the duration of the query.
+
+Alias Column Syntax:
+SELECT column_name AS alias_name FROM table_name;
+
+Alias Table Syntax
+SELECT column_name(s) FROM table_name AS alias_name;
+
+Aliases can be useful when:
+	* There are more than one table involved in a query
+	* Functions are used in the query
+	* Column names are big or not very readable
+	* Two or more columns are combined together
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT LastName AS LN, FirstName AS FN FROM Persons;
++--------+--------------+
+| LN     | FN           |
++--------+--------------+
+| Tom    | Erichsen     |
+| cRUISE | EriSDCSchsen |
+| UISE   | SDCSchsen    |
+| ToM    | SDCSchsen    |
+| Tommy  | ichsen       |
++--------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT LastName AS LN, FirstName AS "F N" FROM Persons;
++--------+--------------+
+| LN     | F N          |
++--------+--------------+
+| Tom    | Erichsen     |
+| cRUISE | EriSDCSchsen |
+| UISE   | SDCSchsen    |
+| ToM    | SDCSchsen    |
+| Tommy  | ichsen       |
++--------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT LastName, CONCAT(Address, ', ', City) AS Addrs
+    -> FROM Persons;
++----------+-----------------------------+
+| LastName | Addrs                       |
++----------+-----------------------------+
+| Tom      | Stavanger, Norway           |
+| cRUISE   | DCSDStavanger, CDSVFXNorway |
+| UISE     | SDStavanger, SVFXNorway     |
+| ToM      | SDStavanger, SVFXNorway     |
+| Tommy    | Vanger, Orway               |
++----------+-----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+
+| OrderID | OrderNumber | CandidateID |
++---------+-------------+-------------+
+|       1 |       77895 |           3 |
+|       2 |       44678 |           3 |
+|       3 |       22456 |           2 |
+|       4 |       24562 |           1 |
++---------+-------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT o.OrderID, o.OrderNumber, p.City
+    -> FROM  Persons AS p, Orders AS o
+    -> WHERE p.City="SVFXNorway" AND p.PersonID=28 AND o.OrderID=4;
++---------+-------------+------------+
+| OrderID | OrderNumber | City       |
++---------+-------------+------------+
+|       4 |       24562 | SVFXNorway |
++---------+-------------+------------+
+1 row in set (0.00 sec)
+
+The following SQL statement is the same as above, but without aliases:
+mysql> SELECT Orders.OrderID, Orders.OrderNumber, Persons.City
+    -> FROM Persons, Orders
+    ->  WHERE Persons.City="SVFXNorway" AND Orders.OrderID=4 AND Persons.PersonID=28;
++---------+-------------+------------+
+| OrderID | OrderNumber | City       |
++---------+-------------+------------+
+|       4 |       24562 | SVFXNorway |
++---------+-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Orders(OrderID, OrderNumber, CandidateID) VALUES(29, 21332, 2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+
+| OrderID | OrderNumber | CandidateID |
++---------+-------------+-------------+
+|       1 |       77895 |           3 |
+|       2 |       44678 |           3 |
+|       3 |       22456 |           2 |
+|       4 |       24562 |           1 |
+|      29 |       21332 |           2 |
++---------+-------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO Orders VALUES(30, 25432, 1);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+
+| OrderID | OrderNumber | CandidateID |
++---------+-------------+-------------+
+|       1 |       77895 |           3 |
+|       2 |       44678 |           3 |
+|       3 |       22456 |           2 |
+|       4 |       24562 |           1 |
+|      29 |       21332 |           2 |
+|      30 |       25432 |           1 |
++---------+-------------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders2;
+Empty set (0.00 sec)
+
+mysql> DESCRIBE Orders2;
++-------------+---------+------+-----+---------+-------+
+| Field       | Type    | Null | Key | Default | Extra |
++-------------+---------+------+-----+---------+-------+
+| OrderID     | int(11) | NO   | PRI | NULL    |       |
+| OrderNumber | int(11) | NO   |     | NULL    |       |
+| CandidateID | int(11) | YES  | MUL | NULL    |       |
++-------------+---------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Orders2 MODIFY CandidateID int AFTER OrderID;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Orders2;
++-------------+---------+------+-----+---------+-------+
+| Field       | Type    | Null | Key | Default | Extra |
++-------------+---------+------+-----+---------+-------+
+| OrderID     | int(11) | NO   | PRI | NULL    |       |
+| CandidateID | int(11) | YES  | MUL | NULL    |       |
+| OrderNumber | int(11) | NO   |     | NULL    |       |
++-------------+---------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders2;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Orders2 VALUES(5,1,3215);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO Orders2 VALUES(6,2,2145);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Orders2;
++---------+-------------+-------------+
+| OrderID | CandidateID | OrderNumber |
++---------+-------------+-------------+
+|       5 |           1 |        3215 |
+|       6 |           2 |        2145 |
++---------+-------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Persons2 ADD CandidateID int;
+Query OK, 1 row affected (0.07 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Persons2;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| ID          | int(11)      | NO   |     | NULL    |       |
+| FirstName   | varchar(255) | NO   |     | NULL    |       |
+| LastName    | varchar(255) | YES  |     | NULL    |       |
+| Address     | varchar(255) | YES  |     | NULL    |       |
+| Age         | int(11)      | NO   |     | NULL    |       |
+| CandidateID | int(11)      | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO Persons2 VALUES(2,'Tom','Cruise','Hyderabad',27,1);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT * FROM Persons2;
++----+-----------+----------+-----------+-----+-------------+
+| ID | FirstName | LastName | Address   | Age | CandidateID |
++----+-----------+----------+-----------+-----+-------------+
+|  1 | John      | Wick     | Hyd       |  26 |        NULL |
+|  2 | Tom       | Cruise   | Hyderabad |  27 |           1 |
++----+-----------+----------+-----------+-----+-------------+
+2 rows in set (0.00 sec)
+
+
+SQL JOIN:
+A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           3 |       38 |
+|       2 |       44678 |           3 |       82 |
+|       3 |       22456 |           2 |       29 |
+|       4 |       24562 |           1 |       30 |
++---------+-------------+-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT Orders.OrderID, Orders.OrderNumber, Persons.LastName, Persons.City FROM Orders INNER JOIN Persons ON Orders.PersonID=Persons.PersonID;
+[or]
+mysql> SELECT Orders.OrderID, Orders.OrderNumber, Persons.LastName, Persons.City FROM Orders JOIN Persons ON Orders.PersonID=Persons.PersonID;
++---------+-------------+----------+--------------+
+| OrderID | OrderNumber | LastName | City         |
++---------+-------------+----------+--------------+
+|       4 |       24562 | cRUISE   | CDSVFXNorway |
+|       3 |       22456 | UISE     | SVFXNorway   |
++---------+-------------+----------+--------------+
+2 rows in set (0.00 sec)
+
+Different Types of SQL JOINs:
+Here are the different types of the JOINs in SQL:
+(INNER) JOIN: Returns records that have matching values in both tables
+LEFT (OUTER) JOIN: Return all records from the left table(table1), and the matched records from the right table(table2)
+RIGHT (OUTER) JOIN: Return all records from the right table(table2), and the matched records from the left table(table1)
+FULL (OUTER) JOIN: Return all records when there is a match in either left or right table
+
+SQL INNER JOIN Keyword:
+The INNER JOIN keyword selects records that have matching values in both tables.
+
+INNER JOIN Syntax:
+SELECT column_name(s)
+FROM table1
+INNER JOIN table2 ON table1.column_name = table2.column_name;
+
+mysql> SELECT * FROM Persons2;
++----+-----------+----------+-----------+-----+-------------+
+| ID | FirstName | LastName | Address   | Age | CandidateID |
++----+-----------+----------+-----------+-----+-------------+
+|  1 | John      | Wick     | Hyd       |  26 |        NULL |
+|  3 | James     | Bond     | London    |  34 |           2 |
+|  2 | Tom       | Cruise   | Hyderabad |  27 |           1 |
++----+-----------+----------+-----------+-----+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders2;
++---------+-------------+-------------+
+| OrderID | CandidateID | OrderNumber |
++---------+-------------+-------------+
+|       5 |           1 |        3215 |
+|       6 |           2 |        2145 |
++---------+-------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT Orders2.OrderID, Persons2.FirstName, Orders2.OrderNumber FROM Orders2 JOIN Persons2 ON Persons2.CandidateID=Orders2.CandidateID;
+[OR]
+mysql> SELECT Orders2.OrderID, Persons2.FirstName, Orders2.OrderNumber
+    -> FROM Orders2
+    -> INNER JOIN Persons2 ON Persons2.CandidateID=Orders2.CandidateID;
++---------+-----------+-------------+
+| OrderID | FirstName | OrderNumber |
++---------+-----------+-------------+
+|       6 | James     |        2145 |
+|       5 | Tom       |        3215 |
++---------+-----------+-------------+
+2 rows in set (0.00 sec)
+
+Note: The INNER JOIN keyword selects all rows from both tables as long as there is a match between the columns.
+	  If there are records in the "Orders2" table that do not have matches in "Persons2", these orders will not be shown!
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           3 |       38 |
+|       2 |       44678 |           3 |       82 |
+|       3 |       22456 |           2 |       29 |
+|       4 |       24562 |           1 |       30 |
++---------+-------------+-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+SQL RIGHT JOIN Keyword:
+The RIGHT JOIN keyword returns all records from the right table (table2), and the matched records from the left table (table1). 
+The result is NULL from the left side, when there is no match.
+
+RIGHT JOIN Syntax:
+SELECT column_name(s)
+FROM table1
+RIGHT JOIN table2 ON table1.column_name = table2.column_name;
+Note: In some databases RIGHT JOIN is called RIGHT OUTER JOIN.
+
+mysql> SELECT Orders.OrderID, Persons.LastName, Persons.City, Orders.OrderNumber
+    -> FROM Orders
+    -> RIGHT JOIN Persons ON Orders.PersonID=Persons.PersonID;
++---------+----------+--------------+-------------+
+| OrderID | LastName | City         | OrderNumber |
++---------+----------+--------------+-------------+
+|    NULL | Tom      | Norway       |        NULL |
+|       4 | cRUISE   | CDSVFXNorway |       24562 |
+|       3 | UISE     | SVFXNorway   |       22456 |
+|    NULL | ToM      | SVFXNorway   |        NULL |
+|    NULL | Tommy    | Orway        |        NULL |
++---------+----------+--------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Orders.OrderID, Persons.LastName, Persons.City, Orders.OrderNumber
+    -> FROM Orders
+    -> RIGHT JOIN Persons ON Orders.PersonID=Persons.PersonID
+    -> ORDER BY Orders.OrderID;
++---------+----------+--------------+-------------+
+| OrderID | LastName | City         | OrderNumber |
++---------+----------+--------------+-------------+
+|    NULL | Tom      | Norway       |        NULL |
+|    NULL | ToM      | SVFXNorway   |        NULL |
+|    NULL | Tommy    | Orway        |        NULL |
+|       3 | UISE     | SVFXNorway   |       22456 |
+|       4 | cRUISE   | CDSVFXNorway |       24562 |
++---------+----------+--------------+-------------+
+5 rows in set (0.00 sec)
+
+SQL LEFT JOIN Keyword:
+The LEFT JOIN keyword returns all records from the left table (table1), and the matched records from the right table (table2).
+The result is NULL from the right side, if there is no match.
+
+LEFT JOIN Syntax:
+SELECT column_name(s)
+FROM table1
+LEFT JOIN table2 ON table1.column_name = table2.column_name;
+Note: In some databases LEFT JOIN is called LEFT OUTER JOIN.
+
+mysql> SELECT Orders.OrderID, Persons.LastName, Persons.City, Orders.OrderNumber
+    -> FROM Orders
+    -> LEFT JOIN Persons ON Orders.PersonID=Persons.PersonID;
++---------+----------+--------------+-------------+
+| OrderID | LastName | City         | OrderNumber |
++---------+----------+--------------+-------------+
+|       1 | NULL     | NULL         |       77895 |
+|       2 | NULL     | NULL         |       44678 |
+|       3 | UISE     | SVFXNorway   |       22456 |
+|       4 | cRUISE   | CDSVFXNorway |       24562 |
++---------+----------+--------------+-------------+
+4 rows in set (0.00 sec)
+
+SQL FULL OUTER JOIN Keyword:
+The FULL OUTER JOIN keyword return all records when there is a match in either left (table1) or right (table2) table records.
+Note: FULL OUTER JOIN can potentially return very large result-sets!
+
+FULL OUTER JOIN Syntax:
+SELECT column_name(s)
+FROM table1
+FULL OUTER JOIN table2 ON table1.column_name = table2.column_name;
+Note: FULL OUTER JOIN is not supported in mysql.
+
+In mysql FULL OUTER JOIN can be implemented using UNION ALL statement.
+Example:
+mysql> SELECT Orders.OrderID, Persons.LastName, Persons.City, Orders.OrderNumber
+    -> FROM Orders
+    -> LEFT JOIN Persons ON Orders.PersonID=Persons.PersonID
+    -> UNION ALL
+    -> SELECT Orders.OrderID, Persons.LastName, Persons.City, Orders.OrderNumber
+    -> FROM Orders
+    -> RIGHT JOIN Persons ON Orders.PersonID=Persons.PersonID;
++---------+----------+--------------+-------------+
+| OrderID | LastName | City         | OrderNumber |
++---------+----------+--------------+-------------+
+|       1 | NULL     | NULL         |       77895 |
+|       2 | NULL     | NULL         |       44678 |
+|       3 | UISE     | SVFXNorway   |       22456 |
+|       4 | cRUISE   | CDSVFXNorway |       24562 |
+|    NULL | Tom      | Norway       |        NULL |
+|       4 | cRUISE   | CDSVFXNorway |       24562 |
+|       3 | UISE     | SVFXNorway   |       22456 |
+|    NULL | ToM      | SVFXNorway   |        NULL |
+|    NULL | Tommy    | Orway        |        NULL |
++---------+----------+--------------+-------------+
+9 rows in set (0.00 sec)
+
+SQL Self JOIN:
+A self JOIN is a regular join, but the table is joined with itself.
+
+Self JOIN Syntax:
+SELECT column_name(s)
+FROM table1 T1, table1 T2
+WHERE condition;
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT A.LastName AS CustomerName1, B.LastName AS CustomerName2, A.City
+    -> FROM Persons A, Persons B
+    -> WHERE A.PersonID <> B.PersonID
+    -> AND A.City = B.City;
++---------------+---------------+------------+
+| CustomerName1 | CustomerName2 | City       |
++---------------+---------------+------------+
+| ToM           | UISE          | SVFXNorway |
+| UISE          | ToM           | SVFXNorway |
++---------------+---------------+------------+
+2 rows in set (0.00 sec)
+[OR]
+mysql> SELECT A.LastName AS CustomerName1, B.LastName AS CustomerName2, A.City
+    -> FROM Persons A, Persons B
+    -> WHERE A.PersonID <> B.PersonID
+    -> AND A.City = B.City;
+	-> ORDER BY B.PersonID;
++---------------+---------------+------------+
+| CustomerName1 | CustomerName2 | City       |
++---------------+---------------+------------+
+| UISE          | ToM           | SVFXNorway |
+| ToM           | UISE          | SVFXNorway |
++---------------+---------------+------------+
+2 rows in set (0.00 sec)
+
+The SQL UNION Operator:
+The UNION operator selects only distinct values by default.
+The UNION operator is used to combine the result-set of two or more SELECT statements.
+	*Each SELECT statement within UNION must have the same number of columns
+	*The columns must also have similar data types
+	*The columns in each SELECT statement must also be in the same order
+	*The column names are usually equal in both SELECT statement in the UNION.
+
+UNION Syntax:
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+Note:The column names are usually equal in both SELECT statement in the UNION
+
+The SQL UNION ALL Operator:
+The UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL:
+
+UNION ALL Syntax:
+SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           3 |       38 |
+|       2 |       44678 |           3 |       82 |
+|       3 |       22456 |           2 |       29 |
+|       4 |       24562 |           1 |       30 |
++---------+-------------+-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT PersonID FROM Persons
+    -> UNION
+    -> SELECT PersonID FROM Orders;
++----------+
+| PersonID |
++----------+
+|       32 |
+|       30 |
+|       29 |
+|       28 |
+|       31 |
+|       38 |
+|       82 |
++----------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT PersonID FROM Persons
+    -> UNION ALL
+    -> SELECT PersonID FROM Orders;
++----------+
+| PersonID |
++----------+
+|       32 |
+|       30 |
+|       29 |
+|       28 |
+|       31 |
+|       38 |
+|       82 |
+|       29 |
+|       30 |
++----------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT PersonID FROM Persons
+    -> WHERE City='SVFXNorway'
+    -> UNION
+    -> SELECT PersonID FROM Orders
+    -> WHERE CandidateID=3;
++----------+
+| PersonID |
++----------+
+|       29 |
+|       28 |
+|       38 |
+|       82 |
++----------+
+4 rows in set (0.00 sec)
+Note:only distinct values
+
+mysql> SELECT PersonID FROM Persons WHERE City='SVFXNorway' UNION ALL SELECT PersonID FROM Orders WHERE CandidateID=3;
++----------+
+| PersonID |
++----------+
+|       29 |
+|       28 |
+|       38 |
+|       82 |
++----------+
+4 rows in set (0.00 sec)
+Note:duplicate values also
+
+The SQL GROUP BY Statement:
+The GROUP BY statement is often used with aggregate functions (COUNT, MAX, MIN, SUM, AVG) to group the result-set by one or more columns.
+
+GROUP BY Syntax:
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+ORDER BY column_name(s);
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT PersonID, City FROM Persons GROUP BY City;
++----------+--------------+
+| PersonID | City         |
++----------+--------------+
+|       30 | CDSVFXNorway |
+|       32 | Norway       |
+|       31 | Orway        |
+|       29 | SVFXNorway   |
++----------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(PersonID), City FROM Persons GROUP BY City;
++-----------------+--------------+
+| COUNT(PersonID) | City         |
++-----------------+--------------+
+|               1 | CDSVFXNorway |
+|               1 | Norway       |
+|               1 | Orway        |
+|               2 | SVFXNorway   |
++-----------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(PersonID), City FROM Persons GROUP BY City ORDER BY COUNT(PersonID) DESC;
++-----------------+--------------+
+| COUNT(PersonID) | City         |
++-----------------+--------------+
+|               2 | SVFXNorway   |
+|               1 | Norway       |
+|               1 | CDSVFXNorway |
+|               1 | Orway        |
++-----------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(PersonID), City FROM Persons WHERE City='SVFXNorway' GROUP BY City ORDER BY COUNT(PersonID) DESC;
++-----------------+------------+
+| COUNT(PersonID) | City       |
++-----------------+------------+
+|               2 | SVFXNorway |
++-----------------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT Orders.OrderID, Persons.LastName, Persons.City, Orders.OrderNumber FROM Orders LEFT JOIN Persons ON Orders.PersonID=Persons.PersonID;
++---------+----------+--------------+-------------+
+| OrderID | LastName | City         | OrderNumber |
++---------+----------+--------------+-------------+
+|       1 | NULL     | NULL         |       77895 |
+|       2 | NULL     | NULL         |       44678 |
+|       3 | UISE     | SVFXNorway   |       22456 |
+|       4 | cRUISE   | CDSVFXNorway |       24562 |
++---------+----------+--------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT Orders.OrderID, Persons.LastName, Persons.City, Orders.OrderNumber FROM Orders LEFT JOIN Persons ON Orders.PersonID=Persons.PersonID GROUP BY LastName;
++---------+----------+--------------+-------------+
+| OrderID | LastName | City         | OrderNumber |
++---------+----------+--------------+-------------+
+|       1 | NULL     | NULL         |       77895 |
+|       4 | cRUISE   | CDSVFXNorway |       24562 |
+|       3 | UISE     | SVFXNorway   |       22456 |
++---------+----------+--------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(Orders.OrderID), Persons.LastName, Persons.City, Orders.OrderNumber FROM Orders LEFT JOIN Persons ON Orders.PersonID=Persons.PersonID GROUP BY LastName;
++-----------------------+----------+--------------+-------------+
+| COUNT(Orders.OrderID) | LastName | City         | OrderNumber |
++-----------------------+----------+--------------+-------------+
+|                     2 | NULL     | NULL         |       77895 |
+|                     1 | cRUISE   | CDSVFXNorway |       24562 |
+|                     1 | UISE     | SVFXNorway   |       22456 |
++-----------------------+----------+--------------+-------------+
+3 rows in set (0.00 sec)
+
+The SQL HAVING Clause:
+The HAVING clause was added to SQL because the WHERE keyword could not be used with aggregate functions.
+
+HAVING Syntax:
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+HAVING condition
+ORDER BY column_name(s);
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(PersonID), City FROM Persons GROUP BY City HAVING COUNT(PersonID) > 0;
++-----------------+--------------+
+| COUNT(PersonID) | City         |
++-----------------+--------------+
+|               1 | CDSVFXNorway |
+|               1 | Norway       |
+|               1 | Orway        |
+|               2 | SVFXNorway   |
++-----------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(PersonID), City FROM Persons GROUP BY City HAVING COUNT(PersonID) > 0 ORDER BY COUNT(PersonID) DESC;
++-----------------+--------------+
+| COUNT(PersonID) | City         |
++-----------------+--------------+
+|               2 | SVFXNorway   |
+|               1 | Norway       |
+|               1 | CDSVFXNorway |
+|               1 | Orway        |
++-----------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(PersonID), City FROM Persons GROUP BY City HAVING COUNT(PersonID) > 1 ORDER BY COUNT(PersonID) DESC;
++-----------------+------------+
+| COUNT(PersonID) | City       |
++-----------------+------------+
+|               2 | SVFXNorway |
++-----------------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(PersonID), City FROM Persons GROUP BY City HAVING COUNT(PersonID) > 2 ORDER BY COUNT(PersonID) DESC;
+Empty set (0.00 sec)
+
+The SQL EXISTS Operator:
+The EXISTS operator is used to test for the existence of any record in a subquery.
+The EXISTS operator returns true if the subquery returns one or more records.
+
+EXISTS Syntax:
+SELECT column_name(s)
+FROM table_name
+WHERE EXISTS
+(SELECT column_name FROM table_name WHERE condition);
+
+mysql> SELECT LastName FROM Persons WHERE EXISTS (SELECT PersonID FROM Orders);
++----------+
+| LastName |
++----------+
+| Tom      |
+| cRUISE   |
+| UISE     |
+| ToM      |
+| Tommy    |
++----------+
+5 rows in set (0.00 sec)
+
+The SQL ANY and ALL Operators:
+The ANY and ALL operators are used with a WHERE or HAVING clause.
+The ANY operator returns true if any of the subquery values meet the condition.
+The ALL operator returns true if all of the subquery values meet the condition.
+
+ANY Syntax:
+SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ANY
+(SELECT column_name FROM table_name WHERE condition);
+
+ALL Syntax:
+SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ALL
+(SELECT column_name FROM table_name WHERE condition);
+Note: The operator must be a standard comparison operator (=, <>, !=, >, >=, <, or <=).
+
+mysql> SELECT * FROM Persons;
++----------+----------+--------------+---------------+--------------+
+| PersonID | LastName | FirstName    | Address       | City         |
++----------+----------+--------------+---------------+--------------+
+|       32 | Tom      | Erichsen     | Stavanger     | Norway       |
+|       30 | cRUISE   | EriSDCSchsen | DCSDStavanger | CDSVFXNorway |
+|       29 | UISE     | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       28 | ToM      | SDCSchsen    | SDStavanger   | SVFXNorway   |
+|       31 | Tommy    | ichsen       | Vanger        | Orway        |
++----------+----------+--------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
++---------+-------------+-------------+----------+
+4 rows in set (0.00 sec)
+
+The following SQL statement returns TRUE and lists the LastName if it finds ANY records in the Orders table that CandidateID = 3:
+mysql> SELECT LastName FROM Persons WHERE PersonID = ANY(SELECT PersonID FROM Orders WHERE CandidateID=3);
++----------+
+| LastName |
++----------+
+| cRUISE   |
+| UISE     |
++----------+
+2 rows in set (0.00 sec)
+
+The following SQL statement returns TRUE and lists the LastName if it finds ALL the records in the Orders table has CandidateID = 3:
+mysql> SELECT LastName FROM Persons WHERE PersonID = ALL (SELECT PersonID FROM Orders WHERE CandidateID=3);
+Empty set (0.00 sec)
+
+The SQL SELECT INTO Statement:
+The SELECT INTO statement copies data from one table into a new table.
+
+SELECT INTO Syntax:
+Copy all columns into a new table:
+SELECT *
+INTO newtable [IN externaldb]
+FROM oldtable
+WHERE condition;
+
+Copy only some columns into a new table:
+SELECT column1, column2, column3, ...
+INTO newtable [IN externaldb]
+FROM oldtable
+WHERE condition;
+The new table will be created with the column-names and types as defined in the old table. You can create new column names using the AS clause.
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_testDB |
++------------------+
+| Orders           |
+| Orders2          |
+| Persons          |
+| Persons2         |
+| Persons3         |
+| Persons4         |
+| Persons5         |
+| Persons6         |
+| Persons7         |
+| Persons8         |
+| TestTable        |
++------------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
++---------+-------------+-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> DESCRIBE Orders;
++-------------+---------+------+-----+---------+-------+
+| Field       | Type    | Null | Key | Default | Extra |
++-------------+---------+------+-----+---------+-------+
+| OrderID     | int(11) | NO   | PRI | NULL    |       |
+| OrderNumber | int(11) | NO   |     | NULL    |       |
+| CandidateID | int(11) | YES  | MUL | NULL    |       |
+| PersonID    | int(11) | YES  |     | NULL    |       |
++-------------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO CustomersBackup2019 SELECT * FROM Orders;
+ERROR 1146 (42S02): Table 'testDB.CustomersBackup2019' doesn't exist
+
+mysql> CREATE TABLE CustomersBackup2019 (
+    -> OrderID int,
+    -> OrderNumber int,
+    -> CandidateID int,
+    -> PersonID int
+    -> );
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO CustomersBackup2019 SELECT OrderID, OrderNumber, CandidateID, PersonID FROM Orders;
+[OR]
+mysql> INSERT INTO CustomersBackup2019 SELECT * FROM Orders;
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CustomersBackup2019;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
++---------+-------------+-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE CustomersBackup2018 ( OrderID int, OrderNumber int, CandidateID int, PersonID int);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO CustomersBackup2018 SELECT OrderID, PersonID FROM Orders WHERE OrderNumber=77895;
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO CustomersBackup2018 SELECT * FROM Orders WHERE OrderNumber=77895;
+Query OK, 1 row affected (0.07 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CustomersBackup2018;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
++---------+-------------+-------------+----------+
+1 row in set (0.00 sec)
+
+Tip: INSERT INTO can also be used to create a new, empty tablez using the schema of another.
+ Just add a WHERE clause that causes the query to return no data:
+mysql> INSERT INTO CustomersBackup2018 SELECT * FROM Orders WHERE 1=0;
+Query OK, 0 rows affected (0.00 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CustomersBackup2018;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
++---------+-------------+-------------+----------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO CustomersBackup2018 SELECT * FROM Orders WHERE 1=1;
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CustomersBackup2018;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
++---------+-------------+-------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> TRUNCATE TABLE CustomersBackup2018;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT * FROM CustomersBackup2018;
+Empty set (0.00 sec)
+
+The SQL INSERT INTO SELECT Statement
+The INSERT INTO SELECT statement copies data from one table and inserts it into another table.
+
+INSERT INTO SELECT requires that data types in source and target tables match
+The existing records in the target table are unaffected
+INSERT INTO SELECT Syntax
+Copy all columns from one table to another table:
+
+INSERT INTO table2
+SELECT * FROM table1
+WHERE condition;
+Copy only some columns from one table into another table:
+
+INSERT INTO table2 (column1, column2, column3, ...)
+SELECT column1, column2, column3, ...
+FROM table1
+WHERE condition;
+
+mysql> INSERT INTO CustomersBackup2018(PersonID, OrderNumber) SELECT OrderID, OrderNumber FROM Orders;
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CustomersBackup2018;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|    NULL |       77895 |        NULL |        1 |
+|    NULL |       44678 |        NULL |        2 |
+|    NULL |       22456 |        NULL |        3 |
+|    NULL |       24562 |        NULL |        4 |
++---------+-------------+-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO CustomersBackup2018(PersonID, OrderNumber) SELECT OrderID, OrderNumber FROM Orders WHERE OrderNumber=77895;
+Query OK, 1 row affected (0.04 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CustomersBackup2018;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|    NULL |       77895 |        NULL |        1 |
++---------+-------------+-------------+----------+
+1 row in set (0.00 sec)
+
+The SQL CASE Statement:
+The CASE statement goes through conditions and return a value when the first condition is met (like an IF-THEN-ELSE statement). 
+So, once a condition is true, it will stop reading and return the result. If no conditions are true, it returns the value in the ELSE clause.
+If there is no ELSE part and no conditions are true, it returns NULL.
+
+CASE Syntax:
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END;
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
++---------+-------------+-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT OrderID, OrderNumber,
+    -> CASE
+    -> WHEN PersonID > 30 THEN "The PersonID is greater than 30"
+    ->  WHEN PersonID = 30 THEN "The PersonID is 30"
+    -> ELSE "The PersonID is under 30"
+    -> END AS PersonIDText
+    -> FROM Orders;
++---------+-------------+---------------------------------+
+| OrderID | OrderNumber | PersonIDText                    |
++---------+-------------+---------------------------------+
+|       1 |       77895 | The PersonID is greater than 30 |
+|       2 |       44678 | The PersonID is greater than 30 |
+|       3 |       22456 | The PersonID is under 30        |
+|       4 |       24562 | The PersonID is 30              |
++---------+-------------+---------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT OrderID, OrderNumber, PersonID FROM Orders
+    -> ORDER BY (CASE
+    -> WHEN PersonID IS NULL THEN OrderNumber
+    -> ELSE OrderNumber
+    -> END);
++---------+-------------+----------+
+| OrderID | OrderNumber | PersonID |
++---------+-------------+----------+
+|       3 |       22456 |       29 |
+|       4 |       24562 |       30 |
+|       2 |       44678 |       82 |
+|       1 |       77895 |       38 |
++---------+-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
+|       5 |        3343 |        NULL |       35 |
++---------+-------------+-------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT OrderNumber, (OrderID + PersonID) FROM Orders;
++-------------+----------------------+
+| OrderNumber | (OrderID + PersonID) |
++-------------+----------------------+
+|       77895 |                   39 |
+|       44678 |                   84 |
+|       22456 |                   32 |
+|       24562 |                   34 |
+|        3343 |                   40 |
++-------------+----------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT OrderNumber, (OrderID + CandidateID) FROM Orders;
++-------------+-------------------------+
+| OrderNumber | (OrderID + CandidateID) |
++-------------+-------------------------+
+|       77895 |                       2 |
+|       44678 |                       4 |
+|       22456 |                       6 |
+|       24562 |                       7 |
+|        3343 |                    NULL |
++-------------+-------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT OrderNumber, (OrderID + IFNULL(CandidateID,0)) FROM Orders;
++-------------+-----------------------------------+
+| OrderNumber | (OrderID + IFNULL(CandidateID,0)) |
++-------------+-----------------------------------+
+|       77895 |                                 2 |
+|       44678 |                                 4 |
+|       22456 |                                 6 |
+|       24562 |                                 7 |
+|        3343 |                                 5 |
++-------------+-----------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT OrderNumber, (OrderID + COALESCE(CandidateID,0)) FROM Orders;
++-------------+-------------------------------------+
+| OrderNumber | (OrderID + COALESCE(CandidateID,0)) |
++-------------+-------------------------------------+
+|       77895 |                                   2 |
+|       44678 |                                   4 |
+|       22456 |                                   6 |
+|       24562 |                                   7 |
+|        3343 |                                   5 |
++-------------+-------------------------------------+
+5 rows in set (0.00 sec)
+
+What is a Stored Procedure?
+A stored procedure is a prepared SQL code that you can save, so the code can be reused over and over again.
+So if you have an SQL query that you write over and over again, save it as a stored procedure, and then just call it to execute it.
+You can also pass parameters to a stored procedure, so that the stored procedure can act based on the parameter value(s) that is passed.
+
+Stored Procedure Syntax:
+CREATE PROCEDURE procedure_name
+AS
+sql_statement
+GO;
+
+Execute a Stored Procedure:
+EXEC procedure_name;
+
+mysql> SELECT * FROM Orders;
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
+|       5 |        3343 |        NULL |       35 |
++---------+-------------+-------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SHOW PROCEDURE STATUS;
+Empty set (0.00 sec)
+
+mysql> delimiter //
+mysql> CREATE PROCEDURE SelectAllOrders() BEGIN SELECT * FROM Orders; END//
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> CALL SelectAllOrders();
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
+|       2 |       44678 |           2 |       82 |
+|       3 |       22456 |           3 |       29 |
+|       4 |       24562 |           3 |       30 |
+|       5 |        3343 |        NULL |       35 |
++---------+-------------+-------------+----------+
+5 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW PROCEDURE STATUS;
++--------+-----------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| Db     | Name            | Type      | Definer        | Modified            | Created             | Security_type | Comment | character_set_client | collation_connection | Database Collation |
++--------+-----------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| testDB | SelectAllOrders | PROCEDURE | root@localhost | 2019-01-21 19:15:06 | 2019-01-21 19:15:06 | DEFINER       |         | utf8                 | utf8_general_ci      | latin1_swedish_ci  |
++--------+-----------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> delimiter //
+mysql> CREATE PROCEDURE SelectAllOrders2(IN var1 INT)
+    -> BEGIN SELECT * FROM Orders WHERE PersonID=var1;
+    -> END//
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> CALL SelectAllOrders2(38);
++---------+-------------+-------------+----------+
+| OrderID | OrderNumber | CandidateID | PersonID |
++---------+-------------+-------------+----------+
+|       1 |       77895 |           1 |       38 |
++---------+-------------+-------------+----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW PROCEDURE STATUS;
++--------+------------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| Db     | Name             | Type      | Definer        | Modified            | Created             | Security_type | Comment | character_set_client | collation_connection | Database Collation |
++--------+------------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| testDB | SelectAllOrders  | PROCEDURE | root@localhost | 2019-01-21 19:15:06 | 2019-01-21 19:15:06 | DEFINER       |         | utf8                 | utf8_general_ci      | latin1_swedish_ci  |
+| testDB | SelectAllOrders2 | PROCEDURE | root@localhost | 2019-01-21 19:24:39 | 2019-01-21 19:24:39 | DEFINER       |         | utf8                 | utf8_general_ci      | latin1_swedish_ci  |
++--------+------------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+2 rows in set (0.00 sec)
+
+mysql> DROP procedure SelectAllOrders;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW PROCEDURE STATUS;
++--------+------------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| Db     | Name             | Type      | Definer        | Modified            | Created             | Security_type | Comment | character_set_client | collation_connection | Database Collation |
++--------+------------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| testDB | SelectAllOrders2 | PROCEDURE | root@localhost | 2019-01-21 19:24:39 | 2019-01-21 19:24:39 | DEFINER       |         | utf8                 | utf8_general_ci      | latin1_swedish_ci  |
++--------+------------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> DROP procedure SelectAllOrders2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW PROCEDURE STATUS;
+Empty set (0.00 sec)
+
+SQL Comments:
+Comments are used to explain sections of SQL statements, or to prevent execution of SQL statements.
+
+Single Line Comments:
+Single line comments start with --.
+Any text between -- and the end of the line will be ignored (will not be executed).
+The following example uses a single-line comment as an explanation:
+mysql> -- select all:
+mysql> SELECT * FROM persons;
++----------+----------+-----------+------------+---------+
+| PersonID | LastName | FirstName | Address    | City    |
++----------+----------+-----------+------------+---------+
+|       32 | Tom      | Erichsen  | Stavanger  | Norway  |
+|       33 | Tom2     | Erichsen2 | Stavanger2 | Norway2 |
+|       34 | tom3     | Erichsen3 | Stavanger3 | Norway3 |
++----------+----------+-----------+------------+---------+
+3 rows in set (0.00 sec)
+
+The following example uses a single-line comment to ignore the end of a line:
+mysql> SELECT * FROM persons;-- WHERE PersonID=33;
++----------+----------+-----------+------------+---------+
+| PersonID | LastName | FirstName | Address    | City    |
++----------+----------+-----------+------------+---------+
+|       32 | Tom      | Erichsen  | Stavanger  | Norway  |
+|       33 | Tom2     | Erichsen2 | Stavanger2 | Norway2 |
+|       34 | tom3     | Erichsen3 | Stavanger3 | Norway3 |
++----------+----------+-----------+------------+---------+
+3 rows in set (0.00 sec)
+
+Multi-line Comments:
+Multi-line comments start with /* and end with */.
+Any text between /* and */ will be ignored.
+
+The following example uses a multi-line comment as an explanation:
+mysql> /*Select all the columns
+   /*> of all the records
+   /*> in the persons table:*/
+mysql> SELECT LastName, /*FirstName,*/ Address FROM persons;-- WHERE PersonID=33;
++----------+------------+
+| LastName | Address    |
++----------+------------+
+| Tom      | Stavanger  |
+| Tom2     | Stavanger2 |
+| tom3     | Stavanger3 |
++----------+------------+
+3 rows in set (0.00 sec)
+
+
+
+

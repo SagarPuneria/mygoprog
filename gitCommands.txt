@@ -1,0 +1,1350 @@
+http://www.ntu.edu.sg/home/ehchua/programming/howto/Git_HowTo.html
+https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html
+https://confluence.atlassian.com/stashkb/how-do-you-make-changes-on-a-specific-commit-747831891.html
+https://alvinalexander.com/git/git-show-change-username-email-address
+https://gist.github.com/yano3/1378948
+http://jasonrudolph.com/blog/2009/02/25/git-tip-how-to-merge-specific-files-from-another-branch/
+
+curl -X GET -i http://localhost:3030/texachathistory
+
+
+git commands: init, clone, add, commit, branch, merge, diff, log, status, checkout, push, pull.
+
+git init
+
+git status
+
+git diff
+
+git add fileName [use to stage for tracking file]
+
+git add * (or) git add --all (use to stage for tracking file)
+
+git rm --cached <file>... (use to unstage.i.e.,used to untrack the file which is just recently added NEW file.i.e., After add command)
+
+git reset HEAD <file>... (use to unstage.i.e.,used to undo the changes for tracked file which is recently added to file.i.e., After add command)
+
+use "git checkout -- main.go add.go sub.go" to discard changes in working directory. (Used After Add command irrespective of commit)
+OR git checkout -- * discard all changes in whole branch.
+
+git config --list
+
+Following commands set values in your local prompt setings only
+git config user.name
+git config user.name "your user name"
+git config user.email
+git config user.email "your email address here"
+
+Following commands set values in $HOME/.gitconfig (i.e.,global setings)
+git config --global user.name "Official Name"
+git config --global user.email "Company Mail ID"
+
+git commit (or) git commit -m "kvndfvnd"
+git commit -m "kvndfvnd" FILE_NAME_WITH_PATH  (To commit specific file)
+git commit -m "Edited t.sh" --amend --author="AuthorName <email@address.com>"
+
+
+git reset --hard HEAD^  [Reverting back to a previous commit]
+git reset --hard 731f3	[Reverting back to a particular commit]
+
+git remote add origin URL
+
+git log --graph --decorate --all
+
+git push -u origin master
+git push -u origin bugfix
+git push -u <remotebranch_path> <masterbranch_path>
+
+==>To delete folder/file in remote file system:
+|->git rm -r <folder_name> [OR] git rm <file_name>
+|->git commit -m "Remove duplicated directory/file" <folder/file> [OR] git commit -m "Remove duplicated directory/file"
+|->git push -u origin <branch_name>
+
+==>Here are the steps to rename the branch:
+|->1.Rename your local branch
+|	 git branch -m <new_name> (If you are on the same branch you want to rename)
+|	 OR git branch -m <old-name> <new-name> (If you are on a different branch)
+|->2.Delete the old-name remote branch and push the new-name local branch
+|	 git push origin :<old_name> (If you are on the same branch you want to rename)
+|	 OR git push origin :<old-name> <new-name> (If you are on a different branch)
+|->3.Reset the upstream branch for the new-name local branch
+	 git push -u origin <new_name>
+  
+==>How do I delete a Git branch both locally and remotely?
+|->Delete Local Branch:
+|	$ git branch -d <branch_name> [The -d option is an alias for --delete, which only deletes the branch if it has already been fully merged in its upstream branch.]
+|	$ git branch -D <branch_name> [You could also use -D, which is an alias for --delete --force, which deletes the branch "irrespective of its merged status."]
+|->Delete Remote Branch:
+	$ git push <remote_name> :<branch_name> [Note that in most cases the remote_name is origin]
+ 
+==>Github create empty branch:
+|->git checkout --orphan empty-branch-name
+|->git rm -rf .
+|->git add *(OR)git add --all[Copy files before add]
+|->git commit -m "first commit" (or) git commit --allow-empty -m "root commit"
+|->git push -u origin empty-branch-name (or) git push --set-upstream origin empty-branch-name(To push the current branch and set the remote as upstream)
+
+
+
+git checkout bugfix 
+
+git fetch
+
+git branch -a	[to list all branches (local and remote)]
+
+git diff <masterbranch_path> <remotebranch_path>  [will only show differences ONLY if they have been committed]
+(OR) git diff master origin/master  [will only show differences ONLY if they have been committed]
+(OR) git diff master:local_path/file1.txt origin/master:remote_path/file1.txt [will only show differences ONLY if they have been committed]
+
+git diff origin/master (OR) git diff @{upstream}  [will show differences in tracked file with/without commit/add.]
+(OR) git diff origin/master:remote_path/file1.txt local_path/file1.txt [will show differences in tracked file with/without of commit/add.]
+
+
+$ git merge feature
+
+
+$ git clone -b calculator_spuneria	git@gitlab.com:golang_projects/calculator.git
+$ git clone -b calc-1.0.0	git@gitlab.com:golang_projects/calculator.git
+$ git clone -b branchName(or)tagName	projectURL
+
+$ git tag
+v1.1
+
+$ git checkout tags/v1.1
+HEAD is now at c435d01 modified unit tests
+
+$ git tag calc-1.0.0 <commitID>
+$ git tag
+calc-1.0.0
+v1.1
+$ git log
+$ git push origin refs/tags/calc-1.0.0 (how-to-only-push-a-specific-tag-to-remote/origin)
+$ git push --tags (This push all tags)
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 1.13 KiB | 386.00 KiB/s, done.
+Total 8 (delta 3), reused 0 (delta 0)
+To gitlab.com:golang_projects/calculator.git
+ * [new tag]         calc-1.0.0 -> calc-1.0.0
+
+
+
+$ git tag
+calc-1.0.0
+v1.1
+
+$ git tag -d calc-1.0.0
+Deleted tag 'calc-1.0.0' (was 37242ea)
+
+$ git tag
+v1.1
+
+$ git push --delete origin calc-1.0.0
+To gitlab.com:golang_projects/calculator.git
+ - [deleted]         calc-1.0.0
+
+
+
+
+git clone https://git01-rc.opsramp.net/agent/agent.git -b CloudNative-Branch
+git clone https://git01-rc.opsramp.net/agent/agent.git
+
+
+-----------------------------GIT-STASH------------------------------------------------------------------------------------------
+https://git-scm.com/docs/git-stash
+git-stash - Stash the changes in a dirty working directory away
+
+https://www.atlassian.com/git/tutorials/saving-changes/git-stash
+Git stash:
+ git stash temporarily shelves (or stashes) changes you've made to your working copy so you can work on something else, and then come back
+ and re-apply them later on. Stashing is handy if you need to quickly switch context and work on something else, but you're mid-way
+ through a code change and aren't quite ready to commit.
+Note: By default Git won't stash changes made to untracked or ignored files.
+--------------------
+Stashing your work: ($ git stash OR git stash push OR git stash save "add style to our site")
+The git stash command takes your uncommitted changes (both staged and unstaged) of ONLY tracked files, saves them away for later use,
+ and then reverts them from your working copy. 
+Note: By default Git won't stash changes made to untracked or ignored files.
+For example:
+$ git status
+On branch master
+Changes to be committed:
+
+ new file: style.css
+
+Changes not staged for commit:
+
+ modified: index.html
+
+$ git stash ( OR git stash push OR git stash save "add style to our site")
+Saved working directory and index state WIP on master: 5002d47 our new homepage
+HEAD is now at 5002d47 our new homepage
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+At this point you're free to make changes, create new commits, switch branches, and perform any other Git operations; then come back
+ and re-apply your stash when you're ready.
+
+Note that the stash is local to your Git repository; stashes are not transferred to the server when you push.
+--------------------
+Re-applying your stashed changes:($ git stash pop)
+You can reapply previously stashed changes with git stash pop:
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+$ git stash pop
+On branch master
+Changes to be committed:
+
+ new file: style.css
+
+Changes not staged for commit:
+
+ modified: index.html
+
+Dropped refs/stash@{0} (32b3aa1d185dfe6d57b3c3cc3b32cbf3e380cc6a)
+Popping your stash removes the changes from your stash and reapplies them to your working copy.
+
+[OR]
+Alternatively, you can reapply the changes to your working copy and keep them in your stash with git stash apply:
+
+$ git stash apply
+On branch master
+Changes to be committed:
+
+ new file: style.css
+
+Changes not staged for commit:
+
+ modified: index.html
+This is useful if you want to apply the same stashed changes to multiple branches.
+
+Now that you know the basics of stashing, there is one caveat with git stash you need to be aware of: by default Git won't stash changes
+ made to untracked or ignored files.
+--------------------
+Stashing untracked or ignored files:(> git stash -u)
+Adding the -u option (or --include-untracked) tells git stash to also stash your untracked files.
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        main.exe
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash
+No local changes to save
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        main.exe
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash list
+stash@{0}: WIP on master: 94ffbfd Update .gitlab-ci.yml
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash -u
+Saved working directory and index state WIP on master: 94ffbfd Update .gitlab-ci.yml
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+--------------------
+Viewing stash diffs:($ git stash show)
+You can view a summary of a stash with git stash show:
+Note: By dafalt shows only most recently stashed. i.e.,stash@{0}
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash list
+stash@{0}: WIP on master: 94ffbfd Update .gitlab-ci.yml
+stash@{1}: WIP on master: 94ffbfd Update .gitlab-ci.yml
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git add main.go
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   main.go
+
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash save "Go Calculator Application"
+Saved working directory and index state On master: Go Calculator Application
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash list
+stash@{0}: On master: Go Calculator Application
+stash@{1}: WIP on master: 94ffbfd Update .gitlab-ci.yml
+stash@{2}: WIP on master: 94ffbfd Update .gitlab-ci.yml
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash show (OR) git stash show stash@{0}
+ main.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash show -p (OR) git stash show -p stash@{0}
+diff --git a/main.go b/main.go
+index 9a543ea..3435f8d 100644
+--- a/main.go
++++ b/main.go
+@@ -10,7 +10,7 @@ import (
+ )
+
+ func main() {
+-       fmt.Println("Go Calculator")
++       fmt.Println("Go Calculator Application")
+        fmt.Println("=============")
+        var greeting string
+        greeting = `Enter your choice
+
+--------------------
+Creating a branch from your stash: [$ git stash branch add-stylesheet stash@{1} ]
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash list
+stash@{0}: On master: Go Calculator Application
+stash@{1}: WIP on master: 94ffbfd Update .gitlab-ci.yml
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash branch add-stylesheet stash@{1}
+Switched to a new branch 'add-stylesheet'
+On branch add-stylesheet
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   main.go
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped stash@{1} (a53cdf68f2a29760dde61a839246870c3ec978a8)
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash list
+stash@{0}: On master: Go Calculator Application
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git status
+On branch add-stylesheet
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   main.go
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git diff
+diff --git a/main.go b/main.go
+index 9a543ea..fb854e7 100644
+--- a/main.go
++++ b/main.go
+@@ -11,7 +11,7 @@ import (
+
+ func main() {
+        fmt.Println("Go Calculator")
+-       fmt.Println("=============")
++       fmt.Println("================")
+        var greeting string
+        greeting = `Enter your choice
+                                1. Addition of two numbers
+
+--------------------
+Cleaning up your stash:
+If you decide you no longer need a particular stash, you can delete it with git stash drop: [$ git stash drop stash@{0}]
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash list
+stash@{0}: On master: Go Calculator Application
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash drop stash@{0}
+Dropped stash@{0} (10cad184ce16e61e8e1fcb892efa216f4dba8d4d)
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash list
+
+Or you can delete all of your stashes with: [$ git stash clear]
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash list
+stash@{0}: On master: ==== oprator
+stash@{1}: WIP on master: 94ffbfd Update .gitlab-ci.yml
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash clear
+
+e:\workspace\TDD\gorilla_mux\src\calculator>git stash list
+
+e:\workspace\TDD\gorilla_mux\src\calculator>
+
+--------------------
+git logs:
+e:\workspace\TDD\gorilla_mux\src\calculator>git log --oneline --graph stash@{0}
+*   a5acbbe (refs/stash) On master: ==== oprator
+|\
+| * 9f9f74a index on master: 94ffbfd Update .gitlab-ci.yml
+|/
+* 94ffbfd (HEAD -> master, origin/master, origin/HEAD) Update .gitlab-ci.yml
+* 3986ae1 Update .gitlab-ci.yml
+* 637f5fc Update .gitlab-ci.yml
+* 9aff768 Update .gitlab-ci.yml
+* a0a8119 Update .gitlab-ci.yml
+* d38cdad Update .gitlab-ci.yml
+* ada2e18 Update .gitlab-ci.yml
+* eebca3f Update .gitlab-ci.yml
+* d52966e Update .gitlab-ci.yml
+* e8c868b Update .gitlab-ci.yml
+* bf861c7 Update .gitlab-ci.yml
+* ac65737 Added logs to debug the console
+* 4f51dd0 Add .gitlab-ci.yml
+* 2aada9f Proper function name for test case
+-----------------------------GIT-STASH------------------------------------------------------------------------------------------
+
+
+==================================================create a new repository on the command line==================================================
+echo "# project" >> README.md
+git init
+git lfs track "*.zip"  [optional, if file size is large]
+git add file.zip (OR) git add *
+git config --list
+git config user.name
+git config user.name "your user name"
+git config user.email
+git config user.email "your email address here"
+git commit -m "first commit"
+git remote add origin URL
+git push -u origin master
+
+
+https://git-lfs.github.com
+=========================push an existing repository from the command line=========================
+git remote add origin URL
+git push -u origin master
+
+=========================import code from another repository=========================
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+
+|->vadmin@HYDLPT052:~/Docs/view/go-jek/howtocreate$ git push
+|	warning: push.default is unset; its implicit value is changing in
+|	Git 2.0 from 'matching' to 'simple'. To squelch this message
+|	and maintain the current behavior after the default changes, use:
+|	
+|	  git config --global push.default matching
+|	
+|	To squelch this message and adopt the new behavior now, use:
+|	
+|	  git config --global push.default simple
+|	
+|	When push.default is set to 'matching', git will push local branches
+|	to the remote branches that already exist with the same name.
+|	
+|	In Git 2.0, Git will default to the more conservative 'simple'
+|	behavior, which only pushes the current branch to the corresponding
+|	remote branch that 'git pull' uses to update the current branch.
+|	
+|	See 'git help config' and search for 'push.default' for further information.
+|	(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+|	'current' instead of 'simple' if you sometimes use older versions of Git)
+|	
+|	Username for 'https://github.com': SagarPuneria
+|	Password for 'https://SagarPuneria@github.com': 
+|	Counting objects: 4, done.
+|	Delta compression using up to 4 threads.
+|	Compressing objects: 100% (3/3), done.
+|	Writing objects: 100% (3/3), 349 bytes | 0 bytes/s, done.
+|	Total 3 (delta 0), reused 0 (delta 0)
+|	To https://github.com/SagarPuneria/howtocreate.git
+|	   15a0d7c..4d3e947  master -> master
+|->vadmin@HYDLPT052:~/Docs/view/go-jek/howtocreate$ 
+
+
+========================================================================================================================================
+sagar@HYDLPT156:~/Docs/Git$ git init
+Initialized empty Git repository in /home/sagar/Docs/Git/.git/
+sagar@HYDLPT156:~/Docs/Git$ ll
+total 12
+drwxrwxr-x  3 sagar sagar 4096 Jul  8 16:56 ./
+drwxrwxr-x 30 sagar sagar 4096 Jul  8 16:55 ../
+drwxrwxr-x  7 sagar sagar 4096 Jul  8 16:56 .git/
+sagar@HYDLPT156:~/Docs/Git$ ls .git/
+branches  config  description  HEAD  hooks  info  objects  refs
+sagar@HYDLPT156:~/Docs/Git$ tree .git/
+.git/
+├── branches
+├── config
+├── description
+├── HEAD
+├── hooks
+│   ├── applypatch-msg.sample
+│   ├── commit-msg.sample
+│   ├── post-update.sample
+│   ├── pre-applypatch.sample
+│   ├── pre-commit.sample
+│   ├── prepare-commit-msg.sample
+│   ├── pre-push.sample
+│   ├── pre-rebase.sample
+│   └── update.sample
+├── info
+│   └── exclude
+├── objects
+│   ├── info
+│   └── pack
+└── refs
+    ├── heads
+    └── tags
+
+9 directories, 13 files
+sagar@HYDLPT156:~/Docs/Git$ git status
+On branch master
+
+Initial commit
+
+nothing to commit (create/copy files and use "git add" to track)
+sagar@HYDLPT156:~/Docs/Git$ vi foo
+sagar@HYDLPT156:~/Docs/Git$ cat foo 
+This is line in my file.
+sagar@HYDLPT156:~/Docs/Git$ git add foo 
+sagar@HYDLPT156:~/Docs/Git$ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   foo
+
+sagar@HYDLPT156:~/Docs/Git$ git commit -m "Just added foo to the repository."
+[master (root-commit) 28674be] Just added foo to the repository.
+ 1 file changed, 1 insertion(+)
+ create mode 100644 foo
+sagar@HYDLPT156:~/Docs/Git$ git status
+On branch master
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ vi foo
+sagar@HYDLPT156:~/Docs/Git$ cat foo 
+This is line in my file.
+
+This is another line. Exciting.
+sagar@HYDLPT156:~/Docs/Git$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   foo
+
+no changes added to commit (use "git add" and/or "git commit -a")
+sagar@HYDLPT156:~/Docs/Git$ git add foo 
+sagar@HYDLPT156:~/Docs/Git$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   foo
+
+sagar@HYDLPT156:~/Docs/Git$ git commit -m "Edited foo."
+[master 002a7b7] Edited foo.
+ 1 file changed, 2 insertions(+)
+sagar@HYDLPT156:~/Docs/Git$ git status
+On branch master
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ git branch feature
+sagar@HYDLPT156:~/Docs/Git$ git status
+On branch master
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ git checkout feature 
+Switched to branch 'feature'
+sagar@HYDLPT156:~/Docs/Git$ git status
+On branch feature
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ vi bar
+sagar@HYDLPT156:~/Docs/Git$ cat bar 
+This is bar. Drink.
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch feature
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	bar
+
+nothing added to commit but untracked files present (use "git add" to track)
+sagar@HYDLPT156:~/Docs/Git$ git add bar 
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch feature
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   bar
+
+sagar@HYDLPT156:~/Docs/Git$ git commit -m "A new bar has opened."
+[feature 0dc9ca1] A new bar has opened.
+ 1 file changed, 1 insertion(+)
+ create mode 100644 bar
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch feature
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ ls
+bar  foo
+sagar@HYDLPT156:~/Docs/Git$ git checkout master 
+Switched to branch 'master'
+sagar@HYDLPT156:~/Docs/Git$ ls
+foo
+sagar@HYDLPT156:~/Docs/Git$ git merge feature 
+Updating 477560d..0dc9ca1
+Fast-forward
+ bar | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 bar
+sagar@HYDLPT156:~/Docs/Git$ ls
+bar  foo
+sagar@HYDLPT156:~/Docs/Git$ git log --graph --decorate --all
+* commit 0dc9ca1623fb1f19741ecde7a2761adcf26cdeb4 (HEAD -> master, feature)
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:22:40 2018 +0530
+| 
+|     A new bar has opened.
+|  
+* commit 477560d1d3110557346130b3bb149e29439ddc3d
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:16:54 2018 +0530
+| 
+|     illustrating add again.
+|  
+* commit 002a7b7c6e448989d7787ae913bd02d55ab3c25c
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:10:14 2018 +0530
+| 
+|     Edited foo.
+|  
+* commit 28674be6013429773670bc2cfe44e73a5c812725
+  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+  Date:   Sun Jul 8 17:02:41 2018 +0530
+  
+      Just added foo to the repository.
+sagar@HYDLPT156:~/Docs/Git$ git reset --hard HEAD^
+HEAD is now at 477560d illustrating add again.
+sagar@HYDLPT156:~/Docs/Git$ ls
+foo
+sagar@HYDLPT156:~/Docs/Git$ git log --graph --decorate --all
+* commit 0dc9ca1623fb1f19741ecde7a2761adcf26cdeb4 (feature)
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:22:40 2018 +0530
+| 
+|     A new bar has opened.
+|  
+* commit 477560d1d3110557346130b3bb149e29439ddc3d (HEAD -> master)
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:16:54 2018 +0530
+| 
+|     illustrating add again.
+|  
+* commit 002a7b7c6e448989d7787ae913bd02d55ab3c25c
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:10:14 2018 +0530
+| 
+|     Edited foo.
+|  
+* commit 28674be6013429773670bc2cfe44e73a5c812725
+  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+  Date:   Sun Jul 8 17:02:41 2018 +0530
+  
+      Just added foo to the repository.
+sagar@HYDLPT156:~/Docs/Git$ git merge feature 
+Updating 477560d..0dc9ca1
+Fast-forward
+ bar | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 bar
+sagar@HYDLPT156:~/Docs/Git$ git log --graph --decorate --all
+* commit 0dc9ca1623fb1f19741ecde7a2761adcf26cdeb4 (HEAD -> master, feature)
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:22:40 2018 +0530
+| 
+|     A new bar has opened.
+|  
+* commit 477560d1d3110557346130b3bb149e29439ddc3d
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:16:54 2018 +0530
+| 
+|     illustrating add again.
+|  
+* commit 002a7b7c6e448989d7787ae913bd02d55ab3c25c
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:10:14 2018 +0530
+| 
+|     Edited foo.
+|  
+* commit 28674be6013429773670bc2cfe44e73a5c812725
+  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+  Date:   Sun Jul 8 17:02:41 2018 +0530
+  
+      Just added foo to the repository.
+sagar@HYDLPT156:~/Docs/Git$ git checkout feature 
+Switched to branch 'feature'
+sagar@HYDLPT156:~/Docs/Git$ git log --graph --decorate --all
+* commit 0dc9ca1623fb1f19741ecde7a2761adcf26cdeb4 (HEAD -> feature, master)
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:22:40 2018 +0530
+| 
+|     A new bar has opened.
+|  
+* commit 477560d1d3110557346130b3bb149e29439ddc3d
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:16:54 2018 +0530
+| 
+|     illustrating add again.
+|  
+* commit 002a7b7c6e448989d7787ae913bd02d55ab3c25c
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:10:14 2018 +0530
+| 
+|     Edited foo.
+|  
+* commit 28674be6013429773670bc2cfe44e73a5c812725
+  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+  Date:   Sun Jul 8 17:02:41 2018 +0530
+  
+      Just added foo to the repository.
+sagar@HYDLPT156:~/Docs/Git$ ls
+bar  foo
+
+sagar@HYDLPT156:~/Docs/Git$ vi foo 
+sagar@HYDLPT156:~/Docs/Git$ cat foo 
+This is line in my file.
+
+
+This is another line. Exciting.
+
+Third line.
+
+This is new feature.
+sagar@HYDLPT156:~/Docs/Git$ git status
+On branch feature
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   foo
+
+no changes added to commit (use "git add" and/or "git commit -a")
+sagar@HYDLPT156:~/Docs/Git$ git add foo 
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch feature
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   foo
+
+sagar@HYDLPT156:~/Docs/Git$ git commit -m "A new feature in foo"
+[feature 81103a8] A new feature in foo
+ 1 file changed, 2 insertions(+)
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch feature
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ git checkout master 
+Switched to branch 'master'
+sagar@HYDLPT156:~/Docs/Git$ ls
+bar  foo
+sagar@HYDLPT156:~/Docs/Git$ cat foo 
+This is line in my file.
+
+
+This is another line. Exciting.
+
+Third line.
+
+sagar@HYDLPT156:~/Docs/Git$ vi bar 
+sagar@HYDLPT156:~/Docs/Git$ cat bar 
+This is bar. Drink.
+
+This is bugfix in master.
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   bar
+
+no changes added to commit (use "git add" and/or "git commit -a")
+sagar@HYDLPT156:~/Docs/Git$ git add bar 
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   bar
+
+sagar@HYDLPT156:~/Docs/Git$ git commit -m "This is quick fix to bar"
+[master 731f335] This is quick fix to bar
+ 1 file changed, 2 insertions(+)
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch master
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ git log --graph --decorate --all
+* commit 731f335ab2639f6c9d71c364762d1406449a957d (HEAD -> master)
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 19:56:29 2018 +0530
+| 
+|     This is quick fix to bar
+|    
+| * commit 81103a8d33846c4e898cd6edecba6bad1165cc11 (feature)
+|/  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+|   Date:   Sun Jul 8 17:44:54 2018 +0530
+|   
+|       A new feature in foo
+|  
+* commit 0dc9ca1623fb1f19741ecde7a2761adcf26cdeb4
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:22:40 2018 +0530
+| 
+|     A new bar has opened.
+|  
+* commit 477560d1d3110557346130b3bb149e29439ddc3d
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:16:54 2018 +0530
+| 
+|     illustrating add again.
+|  
+* commit 002a7b7c6e448989d7787ae913bd02d55ab3c25c
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:10:14 2018 +0530
+| 
+|     Edited foo.
+|  
+* commit 28674be6013429773670bc2cfe44e73a5c812725
+  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+  Date:   Sun Jul 8 17:02:41 2018 +0530
+  
+      Just added foo to the repository.
+sagar@HYDLPT156:~/Docs/Git$ git merge feature 
+Merge made by the 'recursive' strategy.
+ foo | 2 ++
+ 1 file changed, 2 insertions(+)
+sagar@HYDLPT156:~/Docs/Git$ git merge feature 
+Already up-to-date.
+sagar@HYDLPT156:~/Docs/Git$ cat foo 
+This is line in my file.
+
+
+This is another line. Exciting.
+
+Third line.
+
+This is new feature.
+sagar@HYDLPT156:~/Docs/Git$ git log --graph --decorate --all
+*   commit a16d4f0e9d9a09766945bec2467fc0d61041de8a (HEAD -> master)
+|\  Merge: 731f335 81103a8
+| | Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| | Date:   Sun Jul 8 20:07:25 2018 +0530
+| | 
+| |     Merge branch 'feature'
+| |   
+| * commit 81103a8d33846c4e898cd6edecba6bad1165cc11 (feature)
+| | Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| | Date:   Sun Jul 8 17:44:54 2018 +0530
+| | 
+| |     A new feature in foo
+| |   
+* | commit 731f335ab2639f6c9d71c364762d1406449a957d
+|/  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+|   Date:   Sun Jul 8 19:56:29 2018 +0530
+|   
+|       This is quick fix to bar
+|  
+* commit 0dc9ca1623fb1f19741ecde7a2761adcf26cdeb4
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:22:40 2018 +0530
+| 
+|     A new bar has opened.
+|  
+* commit 477560d1d3110557346130b3bb149e29439ddc3d
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:16:54 2018 +0530
+| 
+|     illustrating add again.
+|  
+* commit 002a7b7c6e448989d7787ae913bd02d55ab3c25c
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:10:14 2018 +0530
+| 
+|     Edited foo.
+|  
+* commit 28674be6013429773670bc2cfe44e73a5c812725
+  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+  Date:   Sun Jul 8 17:02:41 2018 +0530
+  
+      Just added foo to the repository.
+sagar@HYDLPT156:~/Docs/Git$ git reset --hard 731f3
+HEAD is now at 731f335 This is quick fix to bar
+sagar@HYDLPT156:~/Docs/Git$ git log --graph --decorate --all
+* commit 731f335ab2639f6c9d71c364762d1406449a957d (HEAD -> master)
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 19:56:29 2018 +0530
+| 
+|     This is quick fix to bar
+|    
+| * commit 81103a8d33846c4e898cd6edecba6bad1165cc11 (feature)
+|/  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+|   Date:   Sun Jul 8 17:44:54 2018 +0530
+|   
+|       A new feature in foo
+|  
+* commit 0dc9ca1623fb1f19741ecde7a2761adcf26cdeb4
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:22:40 2018 +0530
+| 
+|     A new bar has opened.
+|  
+* commit 477560d1d3110557346130b3bb149e29439ddc3d
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:16:54 2018 +0530
+| 
+|     illustrating add again.
+|  
+* commit 002a7b7c6e448989d7787ae913bd02d55ab3c25c
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:10:14 2018 +0530
+| 
+|     Edited foo.
+|  
+* commit 28674be6013429773670bc2cfe44e73a5c812725
+  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+  Date:   Sun Jul 8 17:02:41 2018 +0530
+  
+      Just added foo to the repository.
+sagar@HYDLPT156:~/Docs/Git$ cat foo 
+This is line in my file.
+
+
+This is another line. Exciting.
+
+Third line.
+sagar@HYDLPT156:~/Docs/Git$ cat bar 
+This is bar. Drink.
+
+This is bugfix in master.
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch master
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ git checkout feature 
+Switched to branch 'feature'
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch feature
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ cat foo 
+This is line in my file.
+
+
+This is another line. Exciting.
+
+Third line.
+
+This is new feature.
+sagar@HYDLPT156:~/Docs/Git$ cat bar 
+This is bar. Drink.
+sagar@HYDLPT156:~/Docs/Git$ git merge master 
+Merge made by the 'recursive' strategy.
+ bar | 2 ++
+ 1 file changed, 2 insertions(+)
+sagar@HYDLPT156:~/Docs/Git$ cat foo 
+This is line in my file.
+
+
+This is another line. Exciting.
+
+Third line.
+
+This is new feature.
+sagar@HYDLPT156:~/Docs/Git$ cat bar 
+This is bar. Drink.
+
+This is bugfix in master.
+sagar@HYDLPT156:~/Docs/Git$ git log --graph --decorate --all
+*   commit 7dcd37709374827a133ad2702e74585fd0915bde (HEAD -> feature)
+|\  Merge: 81103a8 731f335
+| | Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| | Date:   Sun Jul 8 20:58:09 2018 +0530
+| | 
+| |     Merge branch 'master' into feature
+| |   
+| * commit 731f335ab2639f6c9d71c364762d1406449a957d (master)
+| | Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| | Date:   Sun Jul 8 19:56:29 2018 +0530
+| | 
+| |     This is quick fix to bar
+| |   
+* | commit 81103a8d33846c4e898cd6edecba6bad1165cc11
+|/  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+|   Date:   Sun Jul 8 17:44:54 2018 +0530
+|   
+|       A new feature in foo
+|  
+* commit 0dc9ca1623fb1f19741ecde7a2761adcf26cdeb4
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:22:40 2018 +0530
+| 
+|     A new bar has opened.
+|  
+* commit 477560d1d3110557346130b3bb149e29439ddc3d
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:16:54 2018 +0530
+| 
+|     illustrating add again.
+|  
+* commit 002a7b7c6e448989d7787ae913bd02d55ab3c25c
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:10:14 2018 +0530
+| 
+|     Edited foo.
+|  
+* commit 28674be6013429773670bc2cfe44e73a5c812725
+  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+  Date:   Sun Jul 8 17:02:41 2018 +0530
+  
+      Just added foo to the repository.
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch feature
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ git checkout master 
+Switched to branch 'master'
+sagar@HYDLPT156:~/Docs/Git$ cat foo 
+This is line in my file.
+
+
+This is another line. Exciting.
+
+Third line.
+sagar@HYDLPT156:~/Docs/Git$ cat bar
+This is bar. Drink.
+
+This is bugfix in master.
+sagar@HYDLPT156:~/Docs/Git$ git merge feature 
+Updating 731f335..7dcd377
+Fast-forward
+ foo | 2 ++
+ 1 file changed, 2 insertions(+)
+sagar@HYDLPT156:~/Docs/Git$ cat foo 
+This is line in my file.
+
+
+This is another line. Exciting.
+
+Third line.
+
+This is new feature.
+sagar@HYDLPT156:~/Docs/Git$ cat bar
+This is bar. Drink.
+
+This is bugfix in master.
+sagar@HYDLPT156:~/Docs/Git$ git status 
+On branch master
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git$ ls
+bar  foo
+sagar@HYDLPT156:~/Docs/Git$ mkdir work
+sagar@HYDLPT156:~/Docs/Git$ ls
+bar  foo  work
+sagar@HYDLPT156:~/Docs/Git$ mv .git/ bar foo work/
+sagar@HYDLPT156:~/Docs/Git$ ls
+work
+sagar@HYDLPT156:~/Docs/Git$ cd work/
+sagar@HYDLPT156:~/Docs/Git/work$ ls
+bar  foo
+sagar@HYDLPT156:~/Docs/Git/work$ git status 
+On branch master
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git/work$ cd ..
+sagar@HYDLPT156:~/Docs/Git$ ls
+work
+sagar@HYDLPT156:~/Docs/Git$ git status 
+fatal: Not a git repository (or any of the parent directories): .git
+sagar@HYDLPT156:~/Docs/Git$ git clone --bare work/ remote
+Cloning into bare repository 'remote'...
+done.
+sagar@HYDLPT156:~/Docs/Git$ ls
+remote  work
+sagar@HYDLPT156:~/Docs/Git$ ls remote/
+branches  description  hooks  objects      refs
+config    HEAD         info   packed-refs
+sagar@HYDLPT156:~/Docs/Git$ ls remote/
+branches  config  description  HEAD  hooks  info  objects  packed-refs  refs
+sagar@HYDLPT156:~/Docs/Git$ ls work/
+bar  foo
+sagar@HYDLPT156:~/Docs/Git$ cd remote/
+sagar@HYDLPT156:~/Docs/Git/remote$ ls
+branches  config  description  HEAD  hooks  info  objects  packed-refs  refs
+sagar@HYDLPT156:~/Docs/Git/remote$ tree
+.
+├── branches
+├── config
+├── description
+├── HEAD
+├── hooks
+│   ├── applypatch-msg.sample
+│   ├── commit-msg.sample
+│   ├── post-update.sample
+│   ├── pre-applypatch.sample
+│   ├── pre-commit.sample
+│   ├── prepare-commit-msg.sample
+│   ├── pre-push.sample
+│   ├── pre-rebase.sample
+│   └── update.sample
+├── info
+│   └── exclude
+├── objects
+│   ├── 00
+│   │   └── 2a7b7c6e448989d7787ae913bd02d55ab3c25c
+│   ├── 0a
+│   │   └── 1ab3b6520a0a0a5b1513f49c1302c5e0774bbd
+│   ├── 0d
+│   │   └── c9ca1623fb1f19741ecde7a2761adcf26cdeb4
+│   ├── 11
+│   │   └── e0b691d295dc7819d64b58bd9ed80ed8d6dd73
+│   ├── 28
+│   │   └── 674be6013429773670bc2cfe44e73a5c812725
+│   ├── 2a
+│   │   └── 7b784c21c41a73be8b7dbfd2fcc463887be9d1
+│   ├── 40
+│   │   └── 47bdd34a126fd31d9df2084f8f8faa95fe7e98
+│   ├── 47
+│   │   └── 7560d1d3110557346130b3bb149e29439ddc3d
+│   ├── 57
+│   │   └── 447b60d8d3cdb1625375241e1844adeb727cfe
+│   ├── 71
+│   │   └── 62f489f0f34f0694972b01ca82411af58d9c69
+│   ├── 73
+│   │   └── 1f335ab2639f6c9d71c364762d1406449a957d
+│   ├── 7d
+│   │   └── cd37709374827a133ad2702e74585fd0915bde
+│   ├── 81
+│   │   └── 103a8d33846c4e898cd6edecba6bad1165cc11
+│   ├── 9e
+│   │   └── dcbce729c00bd851d394fbcbf70e746036bb0a
+│   ├── a1
+│   │   └── 6d4f0e9d9a09766945bec2467fc0d61041de8a
+│   ├── c2
+│   │   └── ed4f1f6de7f15d12f838c7fe8d764e02af5f76
+│   ├── da
+│   │   └── bb98051cec111ba7fa21b4c36a478856764799
+│   ├── e8
+│   │   └── 6447a4ede3aa073d5fa68026855b5255ffae49
+│   ├── ed
+│   │   └── 81bc560d5c224c22d3bd83a27916fb9255439a
+│   ├── fc
+│   │   └── 97242de1b615dd77ee5025d6fe99bdce11e70e
+│   ├── fe
+│   │   └── d8dfa11f17c46ee4cdb9417409a51841ae92f4
+│   ├── ff
+│   │   └── ab93b6de074878d072cee696e446dbe349910d
+│   ├── info
+│   └── pack
+├── packed-refs
+└── refs
+    ├── heads
+    └── tags
+
+31 directories, 36 files
+sagar@HYDLPT156:~/Docs/Git/remote$ 
+sagar@HYDLPT156:~/Docs/Git/remote$ ls
+branches  config  description  HEAD  hooks  info  objects  packed-refs  refs
+sagar@HYDLPT156:~/Docs/Git/remote$ cd ..
+sagar@HYDLPT156:~/Docs/Git$ ls
+remote  work
+sagar@HYDLPT156:~/Docs/Git$ 
+sagar@HYDLPT156:~/Docs/Git$ rm -fr work/
+sagar@HYDLPT156:~/Docs/Git$ ls
+remote
+sagar@HYDLPT156:~/Docs/Git$ git clone remote/ work
+Cloning into 'work'...
+done.
+sagar@HYDLPT156:~/Docs/Git$ ls
+remote  work
+sagar@HYDLPT156:~/Docs/Git$ ls work/
+bar  foo
+sagar@HYDLPT156:~/Docs/Git$ git remote -v
+fatal: Not a git repository (or any of the parent directories): .git
+sagar@HYDLPT156:~/Docs/Git$ ls
+remote  work
+sagar@HYDLPT156:~/Docs/Git$ cd work/
+sagar@HYDLPT156:~/Docs/Git/work$ git remote -v
+origin	/home/sagar/Docs/Git/remote/ (fetch)
+origin	/home/sagar/Docs/Git/remote/ (push)
+sagar@HYDLPT156:~/Docs/Git/work$ git log --graph --decorate --all
+*   commit 7dcd37709374827a133ad2702e74585fd0915bde (HEAD -> master, origin/master, origin/feature, origin/HEAD)
+|\  Merge: 81103a8 731f335
+| | Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| | Date:   Sun Jul 8 20:58:09 2018 +0530
+| | 
+| |     Merge branch 'master' into feature
+| |   
+| * commit 731f335ab2639f6c9d71c364762d1406449a957d
+| | Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| | Date:   Sun Jul 8 19:56:29 2018 +0530
+| | 
+| |     This is quick fix to bar
+| |   
+* | commit 81103a8d33846c4e898cd6edecba6bad1165cc11
+|/  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+|   Date:   Sun Jul 8 17:44:54 2018 +0530
+|   
+|       A new feature in foo
+|  
+* commit 0dc9ca1623fb1f19741ecde7a2761adcf26cdeb4
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:22:40 2018 +0530
+| 
+|     A new bar has opened.
+|  
+* commit 477560d1d3110557346130b3bb149e29439ddc3d
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:16:54 2018 +0530
+| 
+|     illustrating add again.
+|  
+* commit 002a7b7c6e448989d7787ae913bd02d55ab3c25c
+| Author: Sagar Puneria <sagar.puneria@opsramp.com>
+| Date:   Sun Jul 8 17:10:14 2018 +0530
+| 
+|     Edited foo.
+|  
+* commit 28674be6013429773670bc2cfe44e73a5c812725
+  Author: Sagar Puneria <sagar.puneria@opsramp.com>
+  Date:   Sun Jul 8 17:02:41 2018 +0530
+  
+      Just added foo to the repository.
+sagar@HYDLPT156:~/Docs/Git$ ls
+remote  work
+sagar@HYDLPT156:~/Docs/Git$ git clone remote/ other
+Cloning into 'other'...
+done.
+sagar@HYDLPT156:~/Docs/Git$ ls
+other  remote  work
+sagar@HYDLPT156:~/Docs/Git$ cd work/
+sagar@HYDLPT156:~/Docs/Git/work$ ls
+bar  foo
+sagar@HYDLPT156:~/Docs/Git/work$ vi baz
+sagar@HYDLPT156:~/Docs/Git/work$ cat baz
+This is a new file.
+sagar@HYDLPT156:~/Docs/Git/work$ ls
+bar  baz  foo
+sagar@HYDLPT156:~/Docs/Git/work$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	baz
+
+nothing added to commit but untracked files present (use "git add" to track)
+sagar@HYDLPT156:~/Docs/Git/work$ git branch bugfix
+sagar@HYDLPT156:~/Docs/Git/work$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	baz
+
+nothing added to commit but untracked files present (use "git add" to track)
+sagar@HYDLPT156:~/Docs/Git/work$ git checkout bugfix
+Switched to branch 'bugfix'
+sagar@HYDLPT156:~/Docs/Git/work$ git status
+On branch bugfix
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	baz
+
+nothing added to commit but untracked files present (use "git add" to track)
+sagar@HYDLPT156:~/Docs/Git/work$ git add baz 
+sagar@HYDLPT156:~/Docs/Git/work$ git status
+On branch bugfix
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   baz
+
+sagar@HYDLPT156:~/Docs/Git/work$ git commit 
+Aborting commit due to empty commit message.
+sagar@HYDLPT156:~/Docs/Git/work$ git commit -m "Add new file for a bugfix."
+[bugfix 8daa1c5] Add new file for a bugfix.
+ 1 file changed, 1 insertion(+)
+ create mode 100644 baz
+sagar@HYDLPT156:~/Docs/Git/work$ git status
+On branch bugfix
+nothing to commit, working directory clean
+sagar@HYDLPT156:~/Docs/Git/work$ git branch
+* bugfix
+  master
+sagar@HYDLPT156:~/Docs/Git/work$ git branch -r
+  origin/HEAD -> origin/master
+  origin/feature
+  origin/master
+sagar@HYDLPT156:~/Docs/Git/work$ git push origin 
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+fatal: The current branch bugfix has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin bugfix
+
+sagar@HYDLPT156:~/Docs/Git/work$ git push -u origin bugfix
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 328 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To /home/sagar/Docs/Git/remote/
+ * [new branch]      bugfix -> bugfix
+Branch bugfix set up to track remote branch bugfix from origin.
+
+sagar@HYDLPT156:~/Docs/Git/work$ cat .git/config 
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = /home/sagar/Docs/Git/remote/
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[branch "bugfix"]
+	remote = origin
+	merge = refs/heads/bugfix
+sagar@HYDLPT156:~/Docs/Git/work$ gitk
+
