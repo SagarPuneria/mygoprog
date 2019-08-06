@@ -65,6 +65,5 @@ int main()
 
 	// print inoder traversal of the BST 
 	inorder(root); 
-
 	return 0; 
 }
