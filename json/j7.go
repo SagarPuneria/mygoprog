@@ -40,6 +40,24 @@ func main() {
 	fmt.Printf("F1 json value:%s; bool:%t\n", v, ok) // F1 json value:f_1; bool:true
 	fmt.Println("----------")
 
+	rv := reflect.Indirect(reflect.ValueOf(t))
+	for i := 0; i < rt.NumField(); i++ {
+		field := rt.Field(i)
+		value := rv.Field(i)
+		fmt.Println(i, ">>field:", field)
+		fmt.Println(i, ">>value:", value)
+	}
+	/*
+		0 >>field: {F1  int json:"f_1" 0 [0] false}
+		0 >>value: 1
+		1 >>field: {F2  int json:"f_2,omitempty" 8 [1] false}
+		1 >>value: 0
+		2 >>field: {F3  int view:"-" json:"f_3,omitempty" 16 [2] false}
+		2 >>value: 2
+		3 >>field: {F4  int json:"-" 24 [3] false}
+		3 >>value: 3
+	*/
+
 	f2, _ := rt.FieldByName("F2")
 	fmt.Println("f2.Tag:", f2.Tag) // f2.Tag: json:"f_2,omitempty"
 	v, ok = f2.Tag.Lookup("json")
@@ -81,4 +99,33 @@ Field int `json:"-"`
 
 // Field appears in JSON as key "-".
 Field int `json:"-,"`
+*/
+
+/*
+OUTPUT:
+IN-M-6ZQJG5J:json sagar.puneria$ go run j7.go
+{1 0 2 3}
+json.Marshal: {"f_1":1,"f_3":2}
+----------
+f1.Tag: json:"f_1"
+F1 json value:f_1; bool:true
+----------
+0 >>field: {F1  int json:"f_1" 0 [0] false}
+0 >>value: 1
+1 >>field: {F2  int json:"f_2,omitempty" 8 [1] false}
+1 >>value: 0
+2 >>field: {F3  int view:"-" json:"f_3,omitempty" 16 [2] false}
+2 >>value: 2
+3 >>field: {F4  int json:"-" 24 [3] false}
+3 >>value: 3
+f2.Tag: json:"f_2,omitempty"
+F2 json value:f_2,omitempty; bool:true
+----------
+f3.Tag: view:"-" json:"f_3,omitempty"
+F3 json value:f_3,omitempty; bool:true
+F3 view value:-; bool:true
+----------
+f4.Tag: json:"-"
+F4 json value:-; bool:true
+IN-M-6ZQJG5J:json sagar.puneria$
 */

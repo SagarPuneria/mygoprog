@@ -28,4 +28,25 @@ func main() {
 	fmt.Println(f2.Tag) // one:"1"
 	v, ok = f2.Tag.Lookup("one")
 	fmt.Printf("%s, %t\n", v, ok) // 1, true
+
+	values := reflect.Indirect(reflect.ValueOf(T{}))
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		value := values.Field(i)
+		fmt.Println(i, ">>field:", field)
+		fmt.Println(i, ">>value:", value)
+	}
 }
+
+/*OUTPUT:
+IN-M-6ZQJG5J:json sagar.puneria$ go run j5.go
+one:`1`
+, false
+----------
+one:"1"
+1, true
+0 >>field: {f1 main string one:`1` 0 [0] false}
+0 >>value:
+1 >>field: {f2 main string one:"1" 16 [1] false}
+1 >>value:
+*/
