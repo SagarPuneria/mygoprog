@@ -40,3 +40,10 @@ func main() {
 	}
 	fmt.Println("json:", string(b))
 }
+
+/*
+go run j8.go
+struct {Name:Mr Dummy Number:4 Pointer:<nil> Nopointer:}
+---
+json: {"name":"Mr Dummy","Number":4,"-":""}
+*/
