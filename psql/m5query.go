@@ -54,9 +54,8 @@ func main() {
 
 	strQuery := fmt.Sprintf("SELECT * FROM %s.Persons2", *schemaNamePtr)
 
-	ormObj := orm.NewOrm()
-
 	var lists []orm.ParamsList
+	ormObj := orm.NewOrm()
 	_, err := ormObj.Raw(strQuery).ValuesList(&lists)
 	if err != nil {
 		fmt.Println("err:", err)

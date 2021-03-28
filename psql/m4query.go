@@ -42,6 +42,7 @@ func main() {
 		panic(err)
 	}
 	fmt.Println("Successfully connected!")
+
 	/*strQuery := `CREATE TABLE employee.Persons2 (PersonID int, LastName varchar(255), FirstName varchar(255), Address varchar(255), City varchar(255));
 	INSERT INTO Persons2 (PersonID) VALUES (?);`
 	rows, err := db.Query(strQuery, 32)*/
