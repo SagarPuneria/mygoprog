@@ -31,6 +31,7 @@ func (p *post) details() {
 	fmt.Println("Author fullName: ", p.author.fullName()) // Author fullName:  Naveen, Ramanathan
 	fmt.Println("Bio: ", p.author.bio)                    // Bio:  Golang Enthusiast
 }
+
 func main() {
 	author1 := &author{"Naveen", "Ramanathan", "Golang Enthusiast"}
 	post1 := &post{

@@ -42,8 +42,8 @@ func memoryLeak() {
 		}
 		fmt.Println("Go routine exit")
 	}(timer)
-	fmt.Println("Before wait")
+	fmt.Println("memoryLeak, before wait")
 	//time.Sleep(3 * time.Second)
 	wg.Wait()
-	fmt.Println("After wait")
+	fmt.Println("memoryLeak, after wait")
 }
