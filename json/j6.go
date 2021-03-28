@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+
 	type T1 struct {
 		f int `json:"foo"`
 	}

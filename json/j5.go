@@ -23,7 +23,6 @@ func main() {
 	fmt.Printf("%s, %t\n", v, ok) // , false
 
 	fmt.Println("----------")
-
 	f2, _ := t.FieldByName("f2")
 	fmt.Println(f2.Tag) // one:"1"
 	v, ok = f2.Tag.Lookup("one")

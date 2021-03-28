@@ -26,7 +26,7 @@ func main() {
 	var dummy Dummy
 	err := json.Unmarshal(data, &dummy)
 	if err != nil {
-		fmt.Println("An error occured: %v", err)
+		fmt.Printf("An error occured: %v\n", err)
 		os.Exit(1)
 	}
 
@@ -35,7 +35,7 @@ func main() {
 
 	b, err := json.Marshal(dummy)
 	if err != nil {
-		fmt.Println("An error occured: %v", err)
+		fmt.Printf("An error occured: %v\n", err)
 		os.Exit(1)
 	}
 	fmt.Println("json:", string(b))

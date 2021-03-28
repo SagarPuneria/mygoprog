@@ -11,10 +11,10 @@ func main() {
 	a := make(Stuff)
 	a[1] = "asdf"
 	a[-1] = "qwer"
-	fmt.Println("Initial:     ", a)
+	fmt.Println("Initial:", a)
 
 	stuff, err := json.Marshal(a)
-	fmt.Println("Serialized:  ", string(stuff), err)
+	fmt.Println("Serialized:", string(stuff), err)
 
 	b := make(Stuff)
 	err = json.Unmarshal(stuff, &b)

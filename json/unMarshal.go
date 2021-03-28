@@ -29,7 +29,6 @@ func (a *Animal) UnmarshalJSON(b []byte) error {
 	case "zebra":
 		*a = Zebra
 	}
-
 	return nil
 }
 

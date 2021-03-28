@@ -15,6 +15,7 @@ func main() {
 	}
 	//json.Marshal: {"F1":1,"F2":0,"F3":2,"F4":3}
 	*/
+
 	type T struct {
 		F1 int `json:"f_1"`
 		F2 int `json:"f_2,omitempty"`
