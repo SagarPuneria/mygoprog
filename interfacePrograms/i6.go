@@ -5,17 +5,17 @@ import (
 	"math"
 )
 
-/* define an interface */
+// Shape ...define an interface
 type Shape interface {
 	area() float64
 }
 
-/* define a circle */
+// Circle ...define a circle
 type Circle struct {
 	x, y, radius float64
 }
 
-/* define a rectangle */
+// Rectangle ...define a rectangle
 type Rectangle struct {
 	width, height float64
 }
@@ -36,19 +36,42 @@ func getArea(shape Shape) float64 {
 }
 func main() {
 	circle := &Circle{x: 0, y: 0, radius: 5}
+	fmt.Println("Circle area:", getArea(circle), circle.area()) // Circle area: 78.53981633974483 78.53981633974483
+
+	shape := Shape(circle)
+	fmt.Println("Circle area:", shape.area()) // Circle area: 78.53981633974483
+
+	circle2, ok := shape.(*Circle)
+	if ok {
+		fmt.Println("Circle area:", circle2.area()) // Circle area: 78.53981633974483
+	}
+
 	rectangle := &Rectangle{width: 10, height: 5}
-	fmt.Println("Circle area:", getArea(circle))       //Circle area: 78.53981633974483
-	fmt.Println("Rectangle area:", getArea(rectangle)) //Rectangle area: 50
+	fmt.Println("Rectangle area:", getArea(rectangle), rectangle.area()) // Rectangle area: 50 50
+
+	shape = Shape(rectangle)
+	fmt.Println("Rectangle area:", shape.area()) // Rectangle area: 50
+
+	rectangle2, ok := shape.(*Rectangle)
+	if ok {
+		fmt.Println("Rectangle area:", rectangle2.area()) // Rectangle area: 50
+	}
+
 	fmt.Println("-------(OR)------------")
-	Shapes := []Shape{&Circle{x: 0, y: 0, radius: 5}, &Rectangle{width: 10, height: 5}}
-	//Shapes := []Shape{circle, rectangle}
+	// Shapes := []Shape{&Circle{x:0, y:0, radius:5}, &Rectangle{width:10, height:5}}
+	// Shapes := []Shape{circle, rectangle}
+	Shapes := []Shape{circle2, rectangle2}
 	for _, v := range Shapes {
-		fmt.Println(v.area())
+		fmt.Println(v.area()) // fmt.Println(getArea(v)) }
 	}
 }
 
-/*
+/*Output:
+Circle area: 78.53981633974483 78.53981633974483
 Circle area: 78.53981633974483
+Circle area: 78.53981633974483
+Rectangle area: 50 50
+Rectangle area: 50
 Rectangle area: 50
 -------(OR)------------
 78.53981633974483
