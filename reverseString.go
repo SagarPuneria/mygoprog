@@ -46,9 +46,17 @@ func reverseStringWithOutAffectingSpecialCharater(s string) string {
 }
 
 func reverse(s string) string {
+	// Reverse string using rune is a builtin type(efficient solution)
 	runes := []rune(s)
 	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
 		runes[i], runes[j] = runes[j], runes[i]
 	}
 	return string(runes)
+
+	/*
+	// While it works, since strings are immutable(it's very inefficient solution)
+	for _, v := range s {
+		result = string(v) + result
+	}
+	*/
 }
